@@ -6,6 +6,7 @@ tags:
 - jekyll
 - blog
 categories: jekyll
+author: linyuliang
 description: 使用github pages和jekyll搭建博客的教程。
 ---
 # 使用github pages和jekyll搭建博客

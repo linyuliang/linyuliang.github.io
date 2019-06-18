@@ -1,6 +1,8 @@
-            SELECT count(distinct a.sta_mac) count_sta_mac, a.region2_name,a.region_sk,a.loc_x,a.loc_y 
-             from dwd_visitor_sta_day a left join  app_visitor_mac_count_month b on a.sta_mac=b.sta_mac
-            ,dim_region c 
-             where  a.ymd=#{day} and  b.count_month < 10  and b.month='201906' 
-            and a.region_sk = c.region_sk and c.region1_sk = 3 
-            group by a.region2_name ,a.region_sk,a.loc_x ,a.loc_y  order by count_sta_mac desc
+        select ap_mac,ap_loc_x,ap_loc_y,cal_time
+        FROM
+        app_ap_location_5mm,dim_region c
+        where year = '2019'
+        and month='06'
+        and day ='18'
+        and cal_time =1560807600000
+        and app_ap_location_5mm.region_sk = c.region_sk and c.region1_sk = '2'

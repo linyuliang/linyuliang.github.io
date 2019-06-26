@@ -133,11 +133,11 @@ description: kolla-ansible部署入门教程
     [Service]
     MountFlags=shared
     EOF
-    # 配置阿里镜像加速器，这里为chenjinhua@ruijie.com.cn的镜像加速器
+    # 配置阿里镜像加速器，这里为个人阿里云账号的镜像加速器
     sudo mkdir -p /etc/docker
     sudo tee /etc/docker/daemon.json <<-'EOF'
     {
-      "registry-mirrors": ["https://fzcndk1t.mirror.aliyuncs.com"]
+      "registry-mirrors": ["https://xxx.mirror.aliyuncs.com"]
     }
     EOF
     systemctl daemon-reload && systemctl enable docker && systemctl restart docker && systemctl status docker

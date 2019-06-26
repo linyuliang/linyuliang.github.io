@@ -404,24 +404,15 @@ description: kolla-ansible部署入门教程
     neutron_external_interface: "bondOuter"
     
     neutron_plugin_agent: "openvswitch"
-    enable_haproxy: "yes"
-    enable_cinder: "yes"
-    enable_horizon: "yes"
-    
-    # 以下为ceph配置
+
     enable_ceph: "yes"
     enable_ceph_rgw: "yes"
-    enable_ceph_rgw_keystone: "yes"
     #ceph_target_max_bytes: ""  # 表示每个cache pool最大大小。注意，如果配置了cache盘，此项不配置会导致cache不会自动清空。cache_osd_size*cache_osd_num/replicated/cache_pool_num
     #ceph_target_max_objects: "" # 表示cache pool最大的object数量
-    ceph_pool_pg_num: 128 # Total PGs = ((Total_number_of_OSD * 100) / pool_count / replicated . 
+    ceph_pool_pg_num: 128 # Total PGs = ((Total_number_of_OSD * 100) / pool_count / replicated . 当前环境计算结果为32
     ceph_pool_pgp_num: 128
-    glance_backend_ceph: "yes"
-    glance_backend_file: "no"
-    cinder_backend_ceph: "yes"
-    cinder_backup_driver: "ceph"
-    nova_backend_ceph: "yes"
-
+    
+    enable_haproxy: "yes"
     enable_neutron_dvr: "yes"
     enable_neutron_agent_ha: "yes"
     ```

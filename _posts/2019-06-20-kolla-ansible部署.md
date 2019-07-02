@@ -4,29 +4,37 @@ title: kolla-ansible部署
 tags:  
 - kolla-ansible  
 - openstack  
-- rocky
-- 部署  
-categories: OpenStack  
+- 部署
+- rocky    
+categories: Iaas  
 author: linyuliang  
 description: kolla-ansible部署入门教程  
 ---
 # kolla-ansible部署 
-从未使用过openstack，本文是对openstack的第一次安装尝试，没时间整理，安装完再慢慢熟悉，后续整理。  
+从未使用过openstack，本文是对高可用openstack的第一次安装尝试，没时间整理，安装完再慢慢熟悉，后续整理。  
 按照openstack官方当前最新release是stein版本的，但是pip install kolla-ansible安装的kolla-ansible，通过pip show kolla-ansible 查看是7.1.1版本，对应的是rocky版本的。所以本篇的kolla-ansible根据 [kolla-ansible用户指南](https://docs.openstack.org/project-deploy-guide/kolla-ansible/rocky/)，在Centos7.6服务器集群上尝试安装rocky版本的Openstack，后端采用ceph存储。  
+kolla-ansible和openstack的版本需要对应起来，这很重要！  
 参考资料：
 - [Openstack高可用离线部署（使用Kolla部署，后端存储使用CEPH）](https://blog.csdn.net/liuyanwuyu/article/details/80821677)
 - [kolla-ansible 部署openstack(vmware，多节点，ceph存储)](https://www.jianshu.com/p/f02f358a79f4)
 
 <!-- more -->
 #kolla-ansible部署
-##主机要求
-1. 服务器配置
-    - 至少2台controller，1台computer，本文采用3台controller，2台computer
-2. 主机必须满足以下最低要求： 
-    - 系统Centos7.6
-    - 2个网卡
+##本文主机配置
+1. 主机必须满足以下最低要求： 
+    - 2个网卡，都需要网线连接（内部管理网络建议万兆，外部网络千兆即可）
     - 8GB主内存
     - 40GB磁盘空间
+2. 本文服务器配置
+    - 至少2台controller，1台computer，本文采用1台monitor，3台controller，2台computer  
+    hostname | 网卡bondInner | 网卡bondOuter  
+    :-: | :-: | :-:  
+    monitor | 172.29.55.229 | 无ip  
+    controller01 | 172.29.55.231 | 无ip  
+    controller02 | 172.29.55.232 | 无ip  
+    controller03 | 172.29.55.233 | 无ip  
+    compute01 | 172.29.55.234 | 无ip  
+    compute02 | 172.29.55.235 | 无ip  
 3.  系统其他要求
     - 安装系统的时候采用默认分区，并删除/home分区，剩余容量全部分给root分区
     - 系统其他硬盘，不要挂载，直接格式化
@@ -102,7 +110,7 @@ description: kolla-ansible部署入门教程
     scp /etc/hosts root@computer01:/etc/
     scp /etc/hosts root@computer02:/etc/
     ```
-4. 配置kolla安装免密码访问其他节点
+4. 配置monitor节点可以免密码访问其他节点
     ```
     ssh-keygen
     ssh-copy-id root@monitor
@@ -111,6 +119,15 @@ description: kolla-ansible部署入门教程
     ssh-copy-id root@controller03
     ssh-copy-id root@computer01
     ssh-copy-id root@computer02
+    ```
+    配置后，可以通过命令测试，是否可以免密访问
+    ```
+    ssh monitor
+    ssh controller01
+    ssh controller02
+    ssh controller03
+    ssh computer01
+    ssh computer02
     ```
 5. pip加速源配置
     ```
@@ -133,27 +150,55 @@ description: kolla-ansible部署入门教程
     [Service]
     MountFlags=shared
     EOF
-    # 配置阿里镜像加速器，这里为个人阿里云账号的镜像加速器
+    # 配置阿里镜像加速器，xxxxxx不同阿里云用户不同
     sudo mkdir -p /etc/docker
     sudo tee /etc/docker/daemon.json <<-'EOF'
     {
-      "registry-mirrors": ["https://xxx.mirror.aliyuncs.com"]
+      "registry-mirrors": ["https://xxxxxx.mirror.aliyuncs.com"],
     }
     EOF
     systemctl daemon-reload && systemctl enable docker && systemctl restart docker && systemctl status docker
     ```
-
+6. 制作本地镜像源  
+    下面1-6步骤在monitor部署节点上执行，7在所有节点上执行
+    1. 修改kolla镜像有关配置
+        ```
+        vim /etc/kolla/globals.yml
+        openstack_release: "rocky"
+        network_interface: "bondInner"
+        ```
+    2. 拉取镜像
+        `kolla-ansible pull -vvv`
+    3. 启动本地私有仓库的容器
+        ```
+        mkdir -p /opt/docker/registry
+        docker run -d -p 4000:5000 -v /opt/docker/registry:/var/lib/registry --restart=always --name registry registry:latest
+        ```
+    5. 修改上面拉取到的kolla镜像tag,将kolla镜像上传到上面的私有仓库
+        ```
+        for i in `docker images|grep kolla|awk '{print $1}'`;do docker tag $i:rocky 172.29.55.229:4000/$i:rocky;done  
+        # 对应移除tag命令：docker rmi -f $(docker images|grep 172.29.55.229|awk '{print $1":rocky"}')  
+        for i in `docker images|grep 172.29.55.229|awk '{print $1}'`;do docker push $i:rocky;done  
+        ```
+    6. 查看镜像是否成功上传私有仓库
+        ```
+        curl -XGET http://172.29.55.229:4000/v2/_catalog  
+        ```  
+    7. 所有节点上，增加私有仓库加速配置，重启docker
+        ```
+        sudo tee /etc/docker/daemon.json <<-'EOF'
+        {
+          "registry-mirrors": ["https://fzcndk1t.mirror.aliyuncs.com"],
+          "insecure-registries":["172.29.55.229:4000"]
+        }
+        EOF
+        systemctl daemon-reload && systemctl restart docker 
+        ```
 7. 关闭防火墙
     ```
     systemctl stop firewalld && systemctl disable firewalld && systemctl status firewalld
     ```
-8. disable 掉selinux
-    ```
-    setenforce 0
-    sed -i '/^SELINUX=.*/c SELINUX=disabled' /etc/selinux/config
-    cat /etc/selinux/config
-    ```
-9. 网卡配置（TODO 未完成双网卡绑定，一个管理网络，一个外网，等后续双网卡再说）
+8. 网卡配置
     create-bond-interfaces.sh:
     ```
     #!/usr/bin/env bash
@@ -266,6 +311,7 @@ description: kolla-ansible部署入门教程
     ```
     执行网卡绑定：
     ```
+    #monitor节点
     ssh root@monitor "mkdir -p /opt/linyuliang"
     scp /opt/linyuliang/create-bond-interfaces.sh root@monitor:/opt/linyuliang/
     ssh root@monitor "chmod 777 /opt/linyuliang/create-bond-interfaces.sh"
@@ -302,23 +348,19 @@ description: kolla-ansible部署入门教程
     scp /opt/linyuliang/create-bond-interfaces.sh root@computer01:/opt/linyuliang/
     ssh root@computer01 "chmod 777 /opt/linyuliang/create-bond-interfaces.sh"
     ssh root@computer01 "yum install -y lshw pciutils net-tools;modprobe --first-time bonding"
-    ssh root@computer01 "sh /opt/linyuliang/create-bond-interfaces.sh ens1f0 ens1f1 bondInner 172.29.55.234 24 172.29.55.1 114.114.114.114"
-    ssh root@computer01 "sh /opt/linyuliang/create-bond-interfaces.sh enp5s0f0 enp5s0f1 bondOuter - 24 - -"
+    ssh root@computer01 "sh /opt/linyuliang/create-bond-interfaces.sh ens1f0 - bondInner 172.29.55.234 24 172.29.55.1 114.114.114.114"
+    ssh root@computer01 "sh /opt/linyuliang/create-bond-interfaces.sh - ens1f1 bondOuter - 24 - -"
     ssh root@computer01 "service network restart"
 
     ssh root@computer02 "mkdir -p /opt/linyuliang"
     scp /opt/linyuliang/create-bond-interfaces.sh root@computer02:/opt/linyuliang/
     ssh root@computer02 "chmod 777 /opt/linyuliang/create-bond-interfaces.sh"
     ssh root@computer02 "yum install -y lshw pciutils net-tools;modprobe --first-time bonding"
-    ssh root@computer02 "sh /opt/linyuliang/create-bond-interfaces.sh ens1f0 ens1f1 bondInner 172.29.55.105 24 172.29.55.1 114.114.114.114"
-    ssh root@computer02 "sh /opt/linyuliang/create-bond-interfaces.sh enp5s0f0 enp5s0f1 bondOuter - 24 - -"
+    ssh root@computer02 "sh /opt/linyuliang/create-bond-interfaces.sh ens1f0 - bondInner 172.29.55.235 24 172.29.55.1 114.114.114.114"
+    ssh root@computer02 "sh /opt/linyuliang/create-bond-interfaces.sh - ens1f1 bondOuter - 24 - -"
     ssh root@computer02 "service network restart"
     ```
-10. 重启服务器
-    ```
-    reboot
-    ```
-11. 所有节点都要安装
+10. 所有节点都要安装
     ```
     sudo yum install -y wget
     sudo yum install -y epel-release
@@ -327,15 +369,22 @@ description: kolla-ansible部署入门教程
     sudo pip install -U pip
     sudo pip install docker
     ```
-12. 在compute节点上执行,为计算主机的空白硬盘打ceph标签
+11. 所有节点重启服务器
     ```
+    reboot
+    ```
+12. 为存储节点的空白硬盘打ceph标签（本文存储节点，在controller和computer节点上）
+    ```
+    #controller01
+    parted /dev/sdb -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO1 1 -1
+    #controller02
+    parted /dev/sdb -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO1 1 -1
+    #controller03
     parted /dev/sdb -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO1 1 -1
     
-    parted /dev/sdb -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO1 1 -1
-    
-    parted /dev/sdb -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO1 1 -1
-    
-    #SSD硬盘标记为CACHE
+    #SSD硬盘标记为CACHE，会导致ceph创建失败，目前仅一个SSD，无法确认是否CACHE个数和副本数需要对应
+    #computer01
+    #parted /dev/sdb -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_CACHE_BOOTSTRAP_BS 1 -1
     parted /dev/sdb -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO1 1 -1
     parted /dev/sdc -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO2 1 -1
     parted /dev/sdd -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO3 1 -1
@@ -344,6 +393,7 @@ description: kolla-ansible部署入门教程
     parted /dev/sdg -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO6 1 -1
     parted /dev/sdh -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO7 1 -1
     
+    #computer02
     parted /dev/sdb -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO1 1 -1
     parted /dev/sdc -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO2 1 -1
     parted /dev/sdd -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP_BS_FOO3 1 -1
@@ -356,10 +406,10 @@ description: kolla-ansible部署入门教程
     cat > /etc/kolla/config/ceph.conf << EOF 
     [global]
     osd pool default size = 3
-    osd pool default min size = 3
+    osd pool default min size = 2
     EOF
     ```
-###kolla-ansible安装主机上执行
+###kolla-ansible安装主机monitor上执行
 1. 安装依赖
     ```
     sudo yum install -y ansible
@@ -392,33 +442,37 @@ description: kolla-ansible部署入门教程
 5. 修改全局配置,vi /etc/kolla/globals.yml,openstack_release 填stein，mariadb镜像启动报错
     ```
     kolla_base_distro: "centos"
-    kolla_install_type: "source"
+    kolla_install_type: "binary"
     openstack_release: "rocky"
     
     kolla_internal_vip_address: "172.29.55.230"
     
-    docker_registry: ""
+    docker_registry: "172.29.55.229:4000"
     docker_namespace: "kolla"
 
     network_interface: "bondInner"
     neutron_external_interface: "bondOuter"
-    neutron_plugin_agent: "openvswitch"
 
     enable_ceph: "yes"
     enable_ceph_rgw: "yes"
+    enable_chrony: "yes"
     enable_cinder: "yes"
 
     enable_haproxy: "yes"
-    enable_heat: "yes"
     enable_horizon: "yes"
 
     enable_neutron_dvr: "yes"
     enable_neutron_agent_ha: "yes"
     
     ceph_enable_cache: "yes"
-    ceph_target_max_bytes: "106181135928"  # 表示每个cache pool最大大小。注意，如果配置了cache盘，此项不配置会导致cache不会自动清空。cache_osd_size*cache_osd_num/replicated/cache_pool_num
+
+    #ceph_target_max_bytes: "106181135928"  # 表示每个cache pool最大大小。注意，如果配置了cache盘，此项不配置会导致cache不会自动清空。cache_osd_size*cache_osd_num/replicated/cache_pool_num
     #ceph_target_max_objects: "" # 表示cache pool最大的object数量
-    ceph_pool_pg_num: 128 # Total PGs = ((Total_number_of_OSD * 100) / pool_count / replicated . 当前环境计算结果为32
+    
+    #PG和PGP数量一定要根据OSD的数量进行调整，计算公式如下，但是最后算出的结果一定要接近或者等于一个2的指数。
+    #Total PGs = (Total_number_of_OSD * 100) / max_replication_count
+    #例如15个OSD，副本数为3的情况下，根据公式计算的结果应该为500，最接近512，所以需要设定该pool(volumes)的pg_num和pgp_num都为512.
+    ceph_pool_pg_num: 128
     ceph_pool_pgp_num: 128
     
     glance_backend_ceph: "yes"
@@ -473,32 +527,57 @@ description: kolla-ansible部署入门教程
     kolla-ansible -i ./multinode pull
     #开始部署
     kolla-ansible -i ./multinode deploy
+    
     #部署完成之后，还需要这步操作，生成环境变量和脚本：
     kolla-ansible -i ./multinode post-deploy
-    #查看环境变量
-    cat /etc/kolla/admin-openrc.sh
     #安装便捷客户端
     pip install -U python-openstackclient python-neutronclient
     #使admin环境生效
     source /etc/kolla/admin-openrc.sh
     #查看计算服务
     openstack compute service list
+    
+    #运行脚本创建示例网络，图像等
+    . /usr/share/kolla-ansible/init-runonce
+    #部署demo实例
+    openstack server create \
+        --image cirros \
+        --flavor m1.tiny \
+        --key-name mykey \
+        --network demo-net \
+        demo1
     ```
-8. 在contoller节点，查看ceph状态  
-    `docker exec ceph_mon ceph -s`
+8. 在contoller节点，查看ceph状态 ，kolla-ansible默认权重都相等，并且为1，要自己调整，一个个调整，不能一下子全部调整完，等调整后看状态ok，再继续下一个调整  
+    docker exec ceph_mon ceph osd crush reweight osd.4 4表示osd,4这个OSD的weight权重调整为4（设置1T为1，4T为4）
+    ```
+    docker exec ceph_mon ceph -s
+    docker exec ceph_mon ceph osd tree
+    docker exec ceph_mon ceph osd crush reweight osd.4 4
+    docker exec ceph_mon ceph health detail
+    docker exec ceph_mon ceph osd crush reweight osd.5 4
+    docker exec ceph_mon ceph osd crush reweight osd.6 4
+    docker exec ceph_mon ceph osd crush reweight osd.7 4
+    docker exec ceph_mon ceph osd crush reweight osd.8 4
+    docker exec ceph_mon ceph osd crush reweight osd.9 4
+    docker exec ceph_mon ceph osd crush reweight osd.10 4
+    docker exec ceph_mon ceph osd crush reweight osd.11 4
+    docker exec ceph_mon ceph osd crush reweight osd.12 4
+    docker exec ceph_mon ceph osd crush reweight osd.13 4
+    docker exec ceph_mon ceph osd crush reweight osd.14 4
+    ```
 9. 通过vip，访问openstack  
     `http://172.29.55.230`
 10. 销毁openstack  
     ``` 
     kolla-ansible destroy -i ./multinode  --yes-i-really-really-mean-it
     ```
-11. 创建实例时，便捷ssh登录脚本
+###其他
+1. 建立flat网络注意事项：
+    1. 在controller主机上查看物理网络：cat /etc/kolla/neutron-server/ml2_conf.ini  
     ```
-    #!/bin/sh
-    passwd root<<EOF
-    123456
-    123456
-    EOF
-    sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-    systemctl restart sshd
+    [ml2_type_flat]
+    flat_networks = physnet1
     ```
+    2. 物理网络 填写为：physnet1
+    3. 创建网络 不勾选：外部网络
+ 

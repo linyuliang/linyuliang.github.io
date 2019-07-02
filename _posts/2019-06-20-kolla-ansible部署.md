@@ -27,6 +27,7 @@ kolla-ansible和openstack的版本需要对应起来，这很重要！
     - 40GB磁盘空间
 2. 本文服务器配置
     - 至少2台controller，1台computer，本文采用1台monitor，3台controller，2台computer  
+    
     hostname | 网卡bondInner | 网卡bondOuter  
     :-: | :-: | :-:  
     monitor | 172.29.55.229 | 无ip  
@@ -35,6 +36,7 @@ kolla-ansible和openstack的版本需要对应起来，这很重要！
     controller03 | 172.29.55.233 | 无ip  
     compute01 | 172.29.55.234 | 无ip  
     compute02 | 172.29.55.235 | 无ip  
+    
 3.  系统其他要求
     - 安装系统的时候采用默认分区，并删除/home分区，剩余容量全部分给root分区
     - 系统其他硬盘，不要挂载，直接格式化

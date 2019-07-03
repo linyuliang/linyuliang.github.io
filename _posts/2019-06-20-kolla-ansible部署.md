@@ -1,6 +1,6 @@
 ---
 layout: post  
-title: kolla-ansible部署  
+title: kolla-ansible部署高可用openstack  
 tags:  
 - kolla-ansible  
 - openstack  
@@ -8,7 +8,7 @@ tags:
 - rocky    
 categories: Iaas  
 author: linyuliang  
-description: kolla-ansible部署入门教程  
+description: kolla-ansible部署openstack入门教程，使用multinode  
 ---
 # kolla-ansible部署 
 从未使用过openstack，本文是对高可用openstack的第一次安装尝试，没时间整理，安装完再慢慢熟悉，后续整理。  
@@ -582,4 +582,9 @@ kolla-ansible和openstack的版本需要对应起来，这很重要！
     ```
     2. 物理网络 填写为：physnet1
     3. 创建网络 不勾选：外部网络
- 
+2. 要使用vip，提供一个暴力的方法，内网使用(公有云建议使用更好的方案见：allowed-address-pair 特性)：  
+    ```
+    id=`openstack port list |grep "{要关掉安全组的IP}"|awk '{print $2}'`
+    openstack port set --no-security-group $id
+    openstack port set --disable-port-security $id
+    ```

@@ -161,7 +161,7 @@ kolla-ansible和openstack的版本需要对应起来，这很重要！
     EOF
     systemctl daemon-reload && systemctl enable docker && systemctl restart docker && systemctl status docker
     ```
-6. 制作本地镜像源  
+6. 制作本地镜像源（部署节点不能为openstack的安装节点，否则预安装的时候，docker会重启失败，因为私有仓库包含在里面）  
     下面1-6步骤在monitor部署节点上执行，7在所有节点上执行
     1. 修改kolla镜像有关配置
         ```

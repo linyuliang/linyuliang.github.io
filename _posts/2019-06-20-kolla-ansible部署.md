@@ -610,27 +610,41 @@ kolla-ansible和openstack的版本需要对应起来，这很重要！
     enable_haproxy: "yes"
     enable_horizon: "yes"
 
-    cinder_volume_group: "cinder-volumes"
+    enable_neutron_dvr: "yes"
+    enable_neutron_agent_ha: "yes"
+
     ```
-    磁盘格式化，挂载卷
+    磁盘格式化，挂载卷，后使用vgs查看卷
     ```
+    vgremove cinder-volumes && pvremove /dev/sdb
     parted -s /dev/sdb mklabel gpt &&dd if=/dev/urandom of=/dev/sdb bs=512 count=64 && pvcreate /dev/sdb && vgcreate cinder-volumes /dev/sdb
+    vgs
 
+    vgremove cinder-volumes && pvremove /dev/sdb
     parted -s /dev/sdb mklabel gpt &&dd if=/dev/urandom of=/dev/sdb bs=512 count=64 && pvcreate /dev/sdb && vgcreate cinder-volumes /dev/sdb
+    vgs
 
+    vgremove cinder-volumes && pvremove /dev/sdb
     parted -s /dev/sdb mklabel gpt &&dd if=/dev/urandom of=/dev/sdb bs=512 count=64 && pvcreate /dev/sdb && vgcreate cinder-volumes /dev/sdb
+    vgs
 
-    parted -s /dev/sdb mklabel gpt &&dd if=/dev/urandom of=/dev/sdb bs=512 count=64 && pvcreate /dev/sdb && vgcreate cinder-volumes /dev/sdb
-    parted -s /dev/sdc mklabel gpt &&dd if=/dev/urandom of=/dev/sdc bs=512 count=64 && pvcreate /dev/sdc && vgcreate cinder-volumes /dev/sdc
-    parted -s /dev/sdd mklabel gpt &&dd if=/dev/urandom of=/dev/sdd bs=512 count=64 && pvcreate /dev/sdd && vgcreate cinder-volumes /dev/sdd
-    parted -s /dev/sde mklabel gpt &&dd if=/dev/urandom of=/dev/sde bs=512 count=64 && pvcreate /dev/sde && vgcreate cinder-volumes /dev/sde
-    parted -s /dev/sdf mklabel gpt &&dd if=/dev/urandom of=/dev/sdf bs=512 count=64 && pvcreate /dev/sdf && vgcreate cinder-volumes /dev/sdf
-    parted -s /dev/sdg mklabel gpt &&dd if=/dev/urandom of=/dev/sdg bs=512 count=64 && pvcreate /dev/sdg && vgcreate cinder-volumes /dev/sdg
-    parted -s /dev/sdh mklabel gpt &&dd if=/dev/urandom of=/dev/sdh bs=512 count=64 && pvcreate /dev/sdh && vgcreate cinder-volumes /dev/sdh
+    vgremove cinder-volumes && pvremove /dev/sdb /dev/sdc /dev/sdd /dev/sde /dev/sdf /dev/sdg /dev/sdh
+    parted -s /dev/sdb mklabel gpt &&dd if=/dev/urandom of=/dev/sdb bs=512 count=64
+    parted -s /dev/sdc mklabel gpt &&dd if=/dev/urandom of=/dev/sdc bs=512 count=64
+    parted -s /dev/sdd mklabel gpt &&dd if=/dev/urandom of=/dev/sdd bs=512 count=64
+    parted -s /dev/sde mklabel gpt &&dd if=/dev/urandom of=/dev/sde bs=512 count=64
+    parted -s /dev/sdf mklabel gpt &&dd if=/dev/urandom of=/dev/sdf bs=512 count=64
+    parted -s /dev/sdg mklabel gpt &&dd if=/dev/urandom of=/dev/sdg bs=512 count=64
+    parted -s /dev/sdh mklabel gpt &&dd if=/dev/urandom of=/dev/sdh bs=512 count=64
+    pvcreate /dev/sdb /dev/sdc /dev/sdd /dev/sde /dev/sdf /dev/sdg /dev/sdh && vgcreate cinder-volumes /dev/sdb /dev/sdc /dev/sdd /dev/sde /dev/sdf /dev/sdg /dev/sdh
+    vgs 
 
-    parted -s /dev/sdb mklabel gpt &&dd if=/dev/urandom of=/dev/sdb bs=512 count=64 && pvcreate /dev/sdb && vgcreate cinder-volumes /dev/sdb
-    parted -s /dev/sdc mklabel gpt &&dd if=/dev/urandom of=/dev/sdc bs=512 count=64 && pvcreate /dev/sdc && vgcreate cinder-volumes /dev/sdc
-    parted -s /dev/sdd mklabel gpt &&dd if=/dev/urandom of=/dev/sdd bs=512 count=64 && pvcreate /dev/sdd && vgcreate cinder-volumes /dev/sdd
-    parted -s /dev/sde mklabel gpt &&dd if=/dev/urandom of=/dev/sde bs=512 count=64 && pvcreate /dev/sde && vgcreate cinder-volumes /dev/sde
-    parted -s /dev/sdf mklabel gpt &&dd if=/dev/urandom of=/dev/sdf bs=512 count=64 && pvcreate /dev/sdf && vgcreate cinder-volumes /dev/sdf
+    vgremove cinder-volumes && pvremove /dev/sdb /dev/sdc /dev/sdd /dev/sde /dev/sdf
+    parted -s /dev/sdb mklabel gpt &&dd if=/dev/urandom of=/dev/sdb bs=512 count=64 
+    parted -s /dev/sdc mklabel gpt &&dd if=/dev/urandom of=/dev/sdc bs=512 count=64 
+    parted -s /dev/sdd mklabel gpt &&dd if=/dev/urandom of=/dev/sdd bs=512 count=64 
+    parted -s /dev/sde mklabel gpt &&dd if=/dev/urandom of=/dev/sde bs=512 count=64 
+    parted -s /dev/sdf mklabel gpt &&dd if=/dev/urandom of=/dev/sdf bs=512 count=64 
+    pvcreate /dev/sdb /dev/sdc /dev/sdd /dev/sde /dev/sdf && vgcreate cinder-volumes /dev/sdb /dev/sdc /dev/sdd /dev/sde /dev/sdf 
+    vgs
     ```

@@ -582,9 +582,55 @@ kolla-ansible和openstack的版本需要对应起来，这很重要！
     ```
     2. 物理网络 填写为：physnet1
     3. 创建网络 不勾选：外部网络
-2. 要使用vip，提供一个暴力的方法，内网使用(公有云建议使用更好的方案见：allowed-address-pair 特性)：  
+ 2. 要使用vip，提供一个暴力的方法(更好的方案见：allowed-address-pair 特性)：  
     ```
     id=`openstack port list |grep "{要关掉安全组的IP}"|awk '{print $2}'`
     openstack port set --no-security-group $id
     openstack port set --disable-port-security $id
+    ```
+3. 不想使用ceph，则如下方式进行：
+    修改全局配置,vi /etc/kolla/globals.yml,openstack_release 填stein，mariadb镜像启动报错
+    ```
+    kolla_base_distro: "centos"
+    kolla_install_type: "binary"
+    openstack_release: "rocky"
+    
+    kolla_internal_vip_address: "172.29.55.230"
+    
+    docker_registry: "172.29.55.229:4000"
+    docker_namespace: "kolla"
+
+    network_interface: "bondInner"
+    neutron_external_interface: "bondOuter"
+
+    enable_cinder: "yes"
+    enable_cinder_backend_iscsi: "yes"
+    enable_cinder_backend_lvm: "yes"
+
+    enable_haproxy: "yes"
+    enable_horizon: "yes"
+
+    cinder_volume_group: "cinder-volumes"
+    ```
+    磁盘格式化，挂载卷
+    ```
+    parted -s /dev/sdb mklabel gpt &&dd if=/dev/urandom of=/dev/sdb bs=512 count=64 && pvcreate /dev/sdb && vgcreate cinder-volumes /dev/sdb
+
+    parted -s /dev/sdb mklabel gpt &&dd if=/dev/urandom of=/dev/sdb bs=512 count=64 && pvcreate /dev/sdb && vgcreate cinder-volumes /dev/sdb
+
+    parted -s /dev/sdb mklabel gpt &&dd if=/dev/urandom of=/dev/sdb bs=512 count=64 && pvcreate /dev/sdb && vgcreate cinder-volumes /dev/sdb
+
+    parted -s /dev/sdb mklabel gpt &&dd if=/dev/urandom of=/dev/sdb bs=512 count=64 && pvcreate /dev/sdb && vgcreate cinder-volumes /dev/sdb
+    parted -s /dev/sdc mklabel gpt &&dd if=/dev/urandom of=/dev/sdc bs=512 count=64 && pvcreate /dev/sdc && vgcreate cinder-volumes /dev/sdc
+    parted -s /dev/sdd mklabel gpt &&dd if=/dev/urandom of=/dev/sdd bs=512 count=64 && pvcreate /dev/sdd && vgcreate cinder-volumes /dev/sdd
+    parted -s /dev/sde mklabel gpt &&dd if=/dev/urandom of=/dev/sde bs=512 count=64 && pvcreate /dev/sde && vgcreate cinder-volumes /dev/sde
+    parted -s /dev/sdf mklabel gpt &&dd if=/dev/urandom of=/dev/sdf bs=512 count=64 && pvcreate /dev/sdf && vgcreate cinder-volumes /dev/sdf
+    parted -s /dev/sdg mklabel gpt &&dd if=/dev/urandom of=/dev/sdg bs=512 count=64 && pvcreate /dev/sdg && vgcreate cinder-volumes /dev/sdg
+    parted -s /dev/sdh mklabel gpt &&dd if=/dev/urandom of=/dev/sdh bs=512 count=64 && pvcreate /dev/sdh && vgcreate cinder-volumes /dev/sdh
+
+    parted -s /dev/sdb mklabel gpt &&dd if=/dev/urandom of=/dev/sdb bs=512 count=64 && pvcreate /dev/sdb && vgcreate cinder-volumes /dev/sdb
+    parted -s /dev/sdc mklabel gpt &&dd if=/dev/urandom of=/dev/sdc bs=512 count=64 && pvcreate /dev/sdc && vgcreate cinder-volumes /dev/sdc
+    parted -s /dev/sdd mklabel gpt &&dd if=/dev/urandom of=/dev/sdd bs=512 count=64 && pvcreate /dev/sdd && vgcreate cinder-volumes /dev/sdd
+    parted -s /dev/sde mklabel gpt &&dd if=/dev/urandom of=/dev/sde bs=512 count=64 && pvcreate /dev/sde && vgcreate cinder-volumes /dev/sde
+    parted -s /dev/sdf mklabel gpt &&dd if=/dev/urandom of=/dev/sdf bs=512 count=64 && pvcreate /dev/sdf && vgcreate cinder-volumes /dev/sdf
     ```

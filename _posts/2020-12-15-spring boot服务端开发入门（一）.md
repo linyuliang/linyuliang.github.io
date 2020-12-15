@@ -43,7 +43,7 @@ description: spring boot服务端开发入门(一)
 ## IDEA安装
 1. 下载并安装IntelliJ IDEA Community Edition
 2. 打开IDEA，安装插件 `spring assistant`  
-　　[Spring assistant 插件安装](/images/20201215/idea-install-spring-assistant.png)
+　　![Spring assistant 插件安装](/images/20201215/idea-install-spring-assistant.png)
 
 ## Spring Boot快速开始  
 　　本章节实现一个应用，浏览器请求本地URL：`http://localhost:8080/hello`,  
@@ -52,13 +52,13 @@ description: spring boot服务端开发入门(一)
     Hello World!
    ``` 
 1. 新建工程，选择 `spring assistant`，下一步  
-   [新建spring工程](/images/20201215/new-project.png)
+   ![新建spring工程](/images/20201215/new-project.png)
 2. 默认属性中，修改Java version, 选择 `8`，我们当前生产环境使用的jdk版本,下一步  
-   [修改java版本](/images/20201215/change-java-version.png)
+   ![修改java版本](/images/20201215/change-java-version.png)
 3. 选择类型`WEB-->Spring Web`  
-   [选择创建WEB](/images/20201215/new-spring-web.png)
+   ![选择创建WEB](/images/20201215/new-spring-web.png)
 4. 在包 `com.example.demo.controller` 下创建类 `HelloController`  
-   [选择创建WEB](/images/20201215/new-spring-web.png)  
+   ![选择创建WEB](/images/20201215/new-spring-web.png)  
    类代码如下：  
    ``` java
     package com.example.demo.controller;
@@ -76,11 +76,11 @@ description: spring boot服务端开发入门(一)
     }
    ```
 5. 刷新maven依赖  
-   [刷新maven依赖](/images/20201215/refresh-maven.png)
+   ![刷新maven依赖](/images/20201215/refresh-maven.png)
 6. Debug调试运行应用，注意看控制台输出日志，为tomcat容器启动，默认端口号8080  
-   [debug调试运行Spring boot](/images/20201215/debug-spring-boot.png)
+   ![debug调试运行Spring boot](/images/20201215/debug-spring-boot.png)
 7. 启动好后，本地浏览器访问URL：`http://localhost:8080/hello`  
-   [访问hello请求](/images/20201215/show-hello-world.png)
+   ![访问hello请求](/images/20201215/show-hello-world.png)
 
 ## 创建一个RESTFUL请求  
 　　本章节实现一个GET请求，浏览器请求本地URL：`http://localhost:8080/greeting`,  
@@ -94,9 +94,9 @@ description: spring boot服务端开发入门(一)
     {"id":1,"content":"Hello, User!"}
    ``` 
 1. 停止前面启动的应用  
-   [停止应用](/images/20201215/stop-run.png)
+   ![停止应用](/images/20201215/stop-run.png)
 2. 在包`com.example.demo.model`下，新建一个Java Bean对象`Greeting`
-   [新建Greeting](/images/20201215/new-greeting-bean.png)
+   ![新建Greeting](/images/20201215/new-greeting-bean.png)
    类代码如下：  
    ``` java
     package com.example.demo.model;
@@ -121,7 +121,7 @@ description: spring boot服务端开发入门(一)
     }
    ```
 3. 修改前面的Controller类`HelloController`,新增响应`/greeting`请求  
-   [修改HelloController](/images/20201215/modify-hello-controller.png)
+   ![修改HelloController](/images/20201215/modify-hello-controller.png)
    修改后类代码如下：  
    ``` java
     package com.example.demo.controller;
@@ -151,4 +151,4 @@ description: spring boot服务端开发入门(一)
    ```
 4. 重启启动应用调试，如上一章节的6，7
 5. 本地浏览器访问URL:`http://localhost:8080/greeting?name=Linyuliang`，每次访问`id`返回递增，`content`内容根据传入的name参数变更  
-   [浏览器请求Greeting](/images/20201215/request-greeting.png)
+   ![浏览器请求Greeting](/images/20201215/request-greeting.png)

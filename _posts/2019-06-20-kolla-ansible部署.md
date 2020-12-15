@@ -10,7 +10,7 @@ categories: Iaas
 author: linyuliang  
 description: kolla-ansible部署openstack入门教程，使用multinode  
 ---
-# kolla-ansible部署 
+## kolla-ansible部署 
 从未使用过openstack，本文是对高可用openstack的第一次安装尝试，没时间整理，安装完再慢慢熟悉，后续整理。  
 按照openstack官方当前最新release是stein版本的，但是pip install kolla-ansible安装的kolla-ansible，通过pip show kolla-ansible 查看是7.1.1版本，对应的是rocky版本的。所以本篇的kolla-ansible根据 [kolla-ansible用户指南](https://docs.openstack.org/project-deploy-guide/kolla-ansible/rocky/)，在Centos7.6服务器集群上尝试安装rocky版本的Openstack，后端采用ceph存储。  
 kolla-ansible和openstack的版本需要对应起来，这很重要！  
@@ -19,8 +19,7 @@ kolla-ansible和openstack的版本需要对应起来，这很重要！
 - [kolla-ansible 部署openstack(vmware，多节点，ceph存储)](https://www.jianshu.com/p/f02f358a79f4)
 
 <!-- more -->
-#kolla-ansible部署
-##本文主机配置
+## 本文主机配置
 1. 主机必须满足以下最低要求： 
     - 2个网卡，都需要网线连接（内部管理网络建议万兆，外部网络千兆即可）
     - 8GB主内存
@@ -42,7 +41,7 @@ kolla-ansible和openstack的版本需要对应起来，这很重要！
     - 系统其他硬盘，不要挂载，直接格式化
     - 服务器的网口至少两个，一个内网管理必须分配ip，连接网线；另一个不需要分配ip，连接网线。
 
-##所有主机初始化
+## 所有主机初始化
 1. yum加速源配置，并安装需要的依赖
     ```
     mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
@@ -411,7 +410,7 @@ kolla-ansible和openstack的版本需要对应起来，这很重要！
     osd pool default min size = 2
     EOF
     ```
-###kolla-ansible安装主机monitor上执行
+### kolla-ansible安装主机monitor上执行
 1. 安装依赖
     ```
     sudo yum install -y ansible
@@ -573,7 +572,7 @@ kolla-ansible和openstack的版本需要对应起来，这很重要！
     ``` 
     kolla-ansible destroy -i ./multinode  --yes-i-really-really-mean-it
     ```
-###其他
+### 其他
 1. 建立flat网络注意事项：
     1. 在controller主机上查看物理网络：cat /etc/kolla/neutron-server/ml2_conf.ini  
     ```

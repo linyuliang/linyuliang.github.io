@@ -15,8 +15,7 @@ description: spring boot服务端开发入门(一)
 - [Spring快速入门指南](https://spring.io/quickstart)
 
 <!-- more -->
-#spring boot服务端开发入门(一)  
-##前置条件
+## 前置条件
 1. 安装Java开发套件JDK  
    - 使用[AdoptOpenJDK](https://adoptopenjdk.net/)：Spring推荐
    - 使用Oracle JDK：  
@@ -31,7 +30,7 @@ description: spring boot服务端开发入门(一)
     - [IntelliJ IDEA](https://www.jetbrains.com/idea/)：选择下载IntelliJ IDEA Community Edition
     - [Eclipse](https://www.eclipse.org/downloads/packages/)：选择下载Eclipse IDE for Enterprise Java Developers  
 
-##JDK安装
+## JDK安装
 1. 下载JDK 8u201
 2. 安装JDK
 3. 环境变量配置
@@ -41,12 +40,12 @@ description: spring boot服务端开发入门(一)
 4. 测试是否安装成功  
    1. 打开cmd命令框，输入 `java -version` 指令，回车运行，正确提示版本等信息，则说明环境配置正确。
 
-##IDEA安装
+## IDEA安装
 1. 下载并安装IntelliJ IDEA Community Edition
 2. 打开IDEA，安装插件 `spring assistant`  
 　　[Spring assistant 插件安装](/images/20201215/idea-install-spring-assistant.png)
 
-##Spring Boot快速开始  
+## Spring Boot快速开始  
 　　本章节实现一个应用，浏览器请求本地URL：`http://localhost:8080/hello`,  
 　　返回  
    ``` java
@@ -83,7 +82,7 @@ description: spring boot服务端开发入门(一)
 7. 启动好后，本地浏览器访问URL：`http://localhost:8080/hello`  
    [访问hello请求](/images/20201215/show-hello-world.png)
 
-##创建一个RESTFUL请求  
+## 创建一个RESTFUL请求  
 　　本章节实现一个GET请求，浏览器请求本地URL：`http://localhost:8080/greeting`,  
 　　返回一个json对象
    ``` json

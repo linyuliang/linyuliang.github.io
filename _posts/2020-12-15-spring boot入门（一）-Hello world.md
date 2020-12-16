@@ -1,13 +1,13 @@
 ---
 layout: post  
-title: spring boot服务端开发入门(一)  
+title: spring boot入门(一) - Hello World
 tags:  
 - spring boot  
 categories: Web开发  
 author: linyuliang  
-description: spring boot服务端开发入门(一)  
+description: spring boot快速入门，实现Hello World，简单RESTFUL API
 ---
-# spring boot服务端开发入门(一)
+# spring boot入门(一) - Hello World
 本文是spring boot的新手入门教程，目标是能让人快速简单上手和了解服务端的简单Web开发。  
 通过本文，可以学习使用IDEA构建一个Spring boot应用，实现经典的"Hello World!"
 

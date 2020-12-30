@@ -58,7 +58,6 @@ description: spring boot快速入门，实现Hello World，简单RESTFUL API
 3. 选择类型`WEB-->Spring Web`  
    ![选择创建WEB](/images/20201215/new-spring-web.png)
 4. 在包 `com.example.demo.controller` 下创建类 `HelloController`  
-   ![选择创建WEB](/images/20201215/new-spring-web.png)  
    类代码如下：  
    ``` java
     package com.example.demo.controller;

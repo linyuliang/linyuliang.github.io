@@ -128,8 +128,8 @@ description: spring boot入门(三)-Validator参数校验 统一参数校验
             Pageable pageable = PageUtils.getPageable(offset, limit, sort, Arrays.asList(""), false);
             return iSkinThemeAttrService.listByPage(pageable, themeId, type, searchKey);
         }
-    }
-    ```
+    }  
+    ```  
 ## 借用总结图：
 看见这篇文章[《valid 和 validated的使用小结》](https://blog.csdn.net/liyanqiang19/article/details/107318650/)  里面的总结图：
   ![参数校验总结图](/images/20210104/validator.png)  

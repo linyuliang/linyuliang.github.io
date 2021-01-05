@@ -93,7 +93,7 @@ description: spring boot入门(三)-Validator参数校验 统一参数校验
 
     }
     ```  
-## 最简单的参数校验（建议方案）
+## 最简单的参数校验（建议方案）  
 1. 对象参数校验使用@Valid注解
 2. 属性参数校验使用在类上加@Validated注解，然后直接在属性参数上加校验注解，如下面的例子
 3. 嵌套属性注解使用@Valid注解
@@ -129,7 +129,7 @@ description: spring boot入门(三)-Validator参数校验 统一参数校验
             return iSkinThemeAttrService.listByPage(pageable, themeId, type, searchKey);
         }
     }
-    ```  
+    ```
 ## 借用总结图：
 看见这篇文章[《valid 和 validated的使用小结》](https://blog.csdn.net/liyanqiang19/article/details/107318650/)  里面的总结图：
   ![参数校验总结图](/images/20210104/validator.png)  

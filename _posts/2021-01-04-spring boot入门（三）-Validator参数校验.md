@@ -22,7 +22,7 @@ description: spring boot入门(三)-Validator参数校验 统一参数校验
 - @Validated（Spring's JSR-303规范，是标准JSR-303的一个变种）是Spring Validation验证框架对参数的验证机制提供的注解。  
 - 配合BindingResult都可以直接提供参数验证结果。  
 - 可以认为@Validated是@Valid的二次封装，二者在基本验证功能上没有太多区别。但是在分组、注解地方、嵌套验证等功能上两个有所不同。  
-  ![valid&validated区别](/images/20210104/valid&validated.png)  
+  ![valid&validated区别](/images/20210104/valid&Validated.png)  
 1. 分组  
    @Validated：提供了一个分组功能，可以在入参验证时，根据不同的分组采用不同的验证机制，这个网上也有资料，不详述。  
    @Valid：作为标准JSR-303规范，还没有吸收分组的功能。  
@@ -32,122 +32,125 @@ description: spring boot入门(三)-Validator参数校验 统一参数校验
 @Valid：可以用在方法、构造函数、方法参数和成员属性（字段）上  
 其中两者是否能用于成员属性（字段）上直接影响能否提供嵌套验证的功能。    
 3. 嵌套验证  
-   以下面这个实体类为例，它的`attributes`属性，即为嵌套属性，指向另一个包含校验注解的实体类，只能使用`@Valid`注解来触发嵌套属性的参数校验，非集合，如果是个Bean属性也是一样的算嵌套属性。
-```Java
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.hibernate.validator.constraints.Length;
+   以下面这个实体类为例，它的`attributes`属性，即为嵌套属性，指向另一个包含校验注解的实体类，只能使用`@Valid`注解来触发嵌套属性的参数校验，非集合，如果是个Bean属性也是一样的算嵌套属性。  
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+    ```java
+    import io.swagger.annotations.ApiModel;
+    import io.swagger.annotations.ApiModelProperty;
+    import lombok.Data;
+    import lombok.EqualsAndHashCode;
+    import org.hibernate.validator.constraints.Length;
 
-/**
- * <p>
- * 皮肤模板
- * </p>
- *
- * @author linyuliang
- * @since 2020-12-25
- */
-@Data
-@EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SkinTemplate创建请求对象", description = "皮肤模板")
-public class SkinTemplateCreateReq {
-    @ApiModelProperty(value = "模板名称")
-    @NotBlank(message = "模板名称不能为空")
-    @Length(max = 64, message = "模板名称最多64个字")
-    private String name;
+    import javax.validation.Valid;
+    import javax.validation.constraints.NotBlank;
+    import java.util.List;
 
-    @Valid // 嵌套验证必须用@Valid
-    @ApiModelProperty(value = "模板属性定义")
-    private List<TemplateCreateAttribute> attributes;
-
+    /**
+    * <p>
+    * 皮肤模板
+    * </p>
+    *
+    * @author linyuliang
+    * @since 2020-12-25
+    */
     @Data
-    public static class TemplateCreateAttribute {
-        @ApiModelProperty(value = "属性名称")
-        @NotBlank(message = "属性名称不能为空")
-        @Length(max = 64, message = "属性名称最多64个字")
+    @EqualsAndHashCode(callSuper = true)
+    @ApiModel(value = "SkinTemplate创建请求对象", description = "皮肤模板")
+    public class SkinTemplateCreateReq {
+        @ApiModelProperty(value = "模板名称")
+        @NotBlank(message = "模板名称不能为空")
+        @Length(max = 64, message = "模板名称最多64个字")
         private String name;
 
-        @ApiModelProperty(value = "属性编码")
-        @NotBlank(message = "属性编码不能为空")
-        @Length(max = 64, message = "属性编码最多64个字")
-        private String code;
+        @Valid // 嵌套验证必须用@Valid
+        @ApiModelProperty(value = "模板属性定义")
+        private List<TemplateCreateAttribute> attributes;
 
-        @ApiModelProperty(value = "属性类型")
-        @NotBlank(message = "属性类型不能为空")
-        @Length(max = 64, message = "属性类型最多64个字")
-        private String type;
+        @Data
+        public static class TemplateCreateAttribute {
+            @ApiModelProperty(value = "属性名称")
+            @NotBlank(message = "属性名称不能为空")
+            @Length(max = 64, message = "属性名称最多64个字")
+            private String name;
 
-        @ApiModelProperty(value = "属性子类型")
-        private String subType;
+            @ApiModelProperty(value = "属性编码")
+            @NotBlank(message = "属性编码不能为空")
+            @Length(max = 64, message = "属性编码最多64个字")
+            private String code;
 
-        @ApiModelProperty(value = "属性值，对于模板即默认值")
-        @Length(max = 255, message = "属性值最多255个字")
-        private String value;
+            @ApiModelProperty(value = "属性类型")
+            @NotBlank(message = "属性类型不能为空")
+            @Length(max = 64, message = "属性类型最多64个字")
+            private String type;
+
+            @ApiModelProperty(value = "属性子类型")
+            private String subType;
+
+            @ApiModelProperty(value = "属性值，对于模板即默认值")
+            @Length(max = 255, message = "属性值最多255个字")
+            private String value;
+        }
+
     }
-
-}
-```
+    ```  
 ## 最简单的参数校验（建议方案）
 1. 对象参数校验使用@Valid注解
 2. 属性参数校验使用在类上加@Validated注解，然后直接在属性参数上加校验注解，如下面的例子
 3. 嵌套属性注解使用@Valid注解
-4. 如果是分组校验，使用@Validated注解
-```Java
-@Validated
-@RestController
-@RequestMapping("/v1/skin-theme-attr")
-public class SkinThemeAttrController extends AbstractController {
-    @Autowired
-    private ISkinThemeAttrService iSkinThemeAttrService;
+4. 如果是分组校验，使用@Validated注解  
+    ```java
+    @Validated
+    @RestController
+    @RequestMapping("/v1/skin-theme-attr")
+    public class SkinThemeAttrController extends AbstractController {
+        @Autowired
+        private ISkinThemeAttrService iSkinThemeAttrService;
 
-    @Autowired
-    ISkinThemeService skinThemeService;
+        @Autowired
+        ISkinThemeService skinThemeService;
 
-    @ApiOperation(value = "创建皮肤主题属性")
-    @RequestMapping(method = RequestMethod.POST)
-    public SkinThemeAttrDTO create(@Valid @RequestBody SkinThemeAttrCreateReq skinThemeAttrCreateReq) {
-        return iSkinThemeAttrService.create(skinThemeAttrCreateReq);
+        @ApiOperation(value = "创建皮肤主题属性")
+        @RequestMapping(method = RequestMethod.POST)
+        public SkinThemeAttrDTO create(@Valid @RequestBody SkinThemeAttrCreateReq skinThemeAttrCreateReq) {
+            return iSkinThemeAttrService.create(skinThemeAttrCreateReq);
+        }
+
+
+        @ApiOperation(value = "分页获取皮肤主题属性列表")
+        @RequestMapping(value = "", method = RequestMethod.GET)
+        public PageImpl<SkinThemeAttrDTO> getPageByKeyword(@RequestParam(name = "offset", required = true) int offset,
+                                                        @RequestParam(name = "limit", required = true) int limit,
+                                                        @RequestParam(name = "sort", required = false) String sort,
+                                                        @RequestParam(name = "searchKey", required = false) String searchKey,
+                                                        @RequestParam(value = "themeId", required = false) Long themeId,
+                                                        @RequestParam(value = "type", required = false) @Length(max = 64) String type
+        ) {
+            Pageable pageable = PageUtils.getPageable(offset, limit, sort, Arrays.asList(""), false);
+            return iSkinThemeAttrService.listByPage(pageable, themeId, type, searchKey);
+        }
     }
-
-
-    @ApiOperation(value = "分页获取皮肤主题属性列表")
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public PageImpl<SkinThemeAttrDTO> getPageByKeyword(@RequestParam(name = "offset", required = true) int offset,
-                                                       @RequestParam(name = "limit", required = true) int limit,
-                                                       @RequestParam(name = "sort", required = false) String sort,
-                                                       @RequestParam(name = "searchKey", required = false) String searchKey,
-                                                       @RequestParam(value = "themeId", required = false) Long themeId,
-                                                       @RequestParam(value = "type", required = false) @Length(max = 64) String type
-    ) {
-        Pageable pageable = PageUtils.getPageable(offset, limit, sort, Arrays.asList(""), false);
-        return iSkinThemeAttrService.listByPage(pageable, themeId, type, searchKey);
-    }
-}
-```
+    ```  
 ## 借用总结图：
 看见这篇文章[《valid 和 validated的使用小结》](https://blog.csdn.net/liyanqiang19/article/details/107318650/)  里面的总结图：
-  ![参数校验总结图](/images/20210104/validator.png)
+  ![参数校验总结图](/images/20210104/validator.png)  
 
 ## 高级特性
 同样直接参考[《valid 和 validated的使用小结》](https://blog.csdn.net/liyanqiang19/article/details/107318650/) 
 - 嵌套校验 `@Valid`
 - 自定义校验 自定义注解，并实现`ConstraintValidator`接口
-- 分组校验 `@Validated({IGroupA.class,IGroupB.class})` `@Null(groups=IGroupA.class)`
+- 分组校验 
+  - `@Validated({IGroupA.class,IGroupB.class})` `@Null(groups=IGroupA.class)`
+  - 分组校验顺序注解`@GroupSequence({IGroupA.class,IGroupB.class})`
 - 手动校验 
-  - 原生
-    ```Java
+  - 原生  
+    ```java
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     Validator validator = factory.getValidator();
     Set<ContraintViolation<Input>> violations = validator.validate(user);
     if(!violations.isEmpty()){}
     ```
-  - Spring
-    ```Java
+  - Spring  
+    ```java
     @Autowired
     javax.validation.Validator globalValidator;
 

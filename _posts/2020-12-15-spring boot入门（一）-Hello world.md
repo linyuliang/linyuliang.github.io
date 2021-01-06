@@ -13,7 +13,7 @@ description: spring boot快速入门，实现Hello World，简单RESTFUL API
 
 参考资料：
 - [Spring快速入门指南](https://spring.io/quickstart)
-- [Spring boot 参考手册（官方）](docs.spring.io/spring-boot/docs/current/reference/)
+- [Spring boot 参考手册（官方）](https://docs.spring.io/spring-boot/docs/current/reference/)
 <!-- more -->
 ## 前置条件
 1. 安装Java开发套件JDK  

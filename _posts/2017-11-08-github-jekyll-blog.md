@@ -1,11 +1,12 @@
 ---
-layout: post
+layout: posts
 title: 使用github pages和jekyll搭建博客
 tags:
 - github pages
 - jekyll
 - blog
-categories: jekyll
+categories: 
+- jekyll
 author: linyuliang
 description: 使用github pages和jekyll搭建博客的教程。
 ---

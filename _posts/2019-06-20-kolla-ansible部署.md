@@ -1,12 +1,13 @@
 ---
-layout: post  
+layout: posts  
 title: kolla-ansible部署高可用openstack  
 tags:  
 - kolla-ansible  
 - openstack  
 - 部署
 - rocky    
-categories: Iaas  
+categories: 
+- Iaas  
 author: linyuliang  
 description: kolla-ansible部署openstack入门教程，使用multinode  
 ---

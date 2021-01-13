@@ -1,10 +1,11 @@
 ---
-layout: post
+layout: posts
 title: Java代码性能优化案例
 tags:
 - java
 - 优化
-categories: Java
+categories: 
+- Java
 description: 实际代码梳理过程中遇到的一些代码优化案例记录。
 ---
 ## Java代码优化

@@ -1,9 +1,10 @@
 ---
-layout: post  
+layout: posts  
 title: spring boot入门(一) - Hello World
 tags:  
 - spring boot  
-categories: Web开发  
+categories: 
+- Web开发  
 author: linyuliang  
 description: spring boot快速入门，实现Hello World，简单RESTFUL API
 ---

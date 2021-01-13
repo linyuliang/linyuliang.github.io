@@ -9,6 +9,8 @@ categories:
   - jekyll
 author: linyuliang
 description: 使用github pages和jekyll搭建博客的教程。
+classes: wide
+toc: true
 ---
 如果你想要搭建一个免费流量，免费公网域名，简单的中小型博客，那么使用github pages+jekyll可以很好的满足你的需求。搭建博客，你需要准备的东西有：
 * 注册一个自己的[github](https://github.com/)的账号。

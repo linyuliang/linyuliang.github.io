@@ -7,6 +7,8 @@ categories:
    - Web开发  
 author: linyuliang  
 description: spring boot快速入门，实现Hello World，简单RESTFUL API
+classes: wide
+toc: true
 ---
 本文是spring boot的新手入门教程（一），目标是能让人快速简单上手和了解服务端的简单Web开发。  
 通过本文，可以学习使用IDEA构建一个Spring boot应用，实现经典的"Hello World!"

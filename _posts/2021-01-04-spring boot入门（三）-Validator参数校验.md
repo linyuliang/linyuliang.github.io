@@ -4,8 +4,8 @@ excerpt_separator: "<!--more-->"
 tags:  
   - spring boot
   - Validator
-  - @Valid
-  - @Validated
+  - Valid
+  - Validated
 categories: 
   - Web开发  
 author: linyuliang  

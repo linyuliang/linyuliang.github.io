@@ -1,10 +1,13 @@
 ---
-layout: posts  
 title: spring boot入门(三)-Validator参数校验
+excerpt_separator: "<!--more-->"
 tags:  
-- spring boot  Validator @Valid @Validated
+  - spring boot
+  - Validator
+  - @Valid
+  - @Validated
 categories: 
-- Web开发  
+  - Web开发  
 author: linyuliang  
 description: spring boot入门(三)-Validator参数校验 统一参数校验
 ---

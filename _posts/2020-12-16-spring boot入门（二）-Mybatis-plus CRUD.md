@@ -1,10 +1,10 @@
 ---
-layout: posts  
 title: spring boot入门(二)-Mybatis-Plus CRUD  
+excerpt_separator: "<!--more-->"
 tags:  
-- spring boot  
+    - spring boot  
 categories: 
-- Web开发  
+    - Web开发  
 author: linyuliang  
 description: spring boot入门(二) 使用Mybatis Plus 实现简单的单表CRUD Demo  
 ---

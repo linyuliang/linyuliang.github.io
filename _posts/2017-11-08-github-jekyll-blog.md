@@ -1,16 +1,15 @@
 ---
-layout: posts
 title: 使用github pages和jekyll搭建博客
+excerpt_separator: "<!--more-->"
 tags:
-- github pages
-- jekyll
-- blog
+  - github pages
+  - jekyll
+  - blog
 categories: 
-- jekyll
+  - jekyll
 author: linyuliang
 description: 使用github pages和jekyll搭建博客的教程。
 ---
-# 使用github pages和jekyll搭建博客
 如果你想要搭建一个免费流量，免费公网域名，简单的中小型博客，那么使用github pages+jekyll可以很好的满足你的需求。搭建博客，你需要准备的东西有：
 * 注册一个自己的[github](https://github.com/)的账号。
 * 了解什么是[github-pages](https://help.github.com/categories/github-pages-basics/)，以及它的使用限制，并且发布一个自己的Github Pages，也就是博客。特别要注意的是：不要将自己的敏感信息（例如：各类账号密码等）放到博客的代码上，因为这个博客的代码是公开，且所有人可见的。

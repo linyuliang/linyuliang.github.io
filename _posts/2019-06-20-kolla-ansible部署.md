@@ -1,17 +1,16 @@
 ---
-layout: posts  
 title: kolla-ansible部署高可用openstack  
+excerpt_separator: "<!--more-->"
 tags:  
-- kolla-ansible  
-- openstack  
-- 部署
-- rocky    
+    - kolla-ansible  
+    - openstack  
+    - 部署
+    - rocky    
 categories: 
-- Iaas  
+    - Iaas  
 author: linyuliang  
 description: kolla-ansible部署openstack入门教程，使用multinode  
 ---
-## kolla-ansible部署 
 从未使用过openstack，本文是对高可用openstack的第一次安装尝试，没时间整理，安装完再慢慢熟悉，后续整理。  
 按照openstack官方当前最新release是stein版本的，但是pip install kolla-ansible安装的kolla-ansible，通过pip show kolla-ansible 查看是7.1.1版本，对应的是rocky版本的。所以本篇的kolla-ansible根据 [kolla-ansible用户指南](https://docs.openstack.org/project-deploy-guide/kolla-ansible/rocky/)，在Centos7.6服务器集群上尝试安装rocky版本的Openstack，后端采用ceph存储。  
 kolla-ansible和openstack的版本需要对应起来，这很重要！  

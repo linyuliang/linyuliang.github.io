@@ -1,8 +1,0 @@
-        select ap_mac,ap_loc_x,ap_loc_y,cal_time
-        FROM
-        app_ap_location_5mm,dim_region c
-        where year = '2019'
-        and month='06'
-        and day ='18'
-        and cal_time =1560807600000
-        and app_ap_location_5mm.region_sk = c.region_sk and c.region1_sk = '2'

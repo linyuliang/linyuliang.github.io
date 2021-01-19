@@ -16,6 +16,7 @@ toc: true
 参考资料：
 - [Spring快速入门指南](https://spring.io/quickstart)
 - [Spring boot 参考手册（官方）](https://docs.spring.io/spring-boot/docs/current/reference/)
+- [Spring 参考手册（官方）](https://docs.spring.io/spring-framework/docs/current/reference/)
 <!-- more -->
 ## 前置条件
 1. 安装Java开发套件JDK  

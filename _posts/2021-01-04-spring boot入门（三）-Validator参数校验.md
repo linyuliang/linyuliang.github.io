@@ -23,7 +23,7 @@ toc: true
 ## 概述  
 　　基础概念和校验注解，网上有很多的资料,例如上面的参考资料，本文章不再复制描述，只关注一些重点。  
 - @Validated和@Valid两种数据校验注解，Spring都支持。  
-- @Valid（标准JSR-303规范）是javax（即Oracle）提供的校验注解,所属包为：`javax.validation.Valid`，`Hibernate-validator`对其进行了实现，并增加了一些自定义的校验注解。同时，它并非一定要和Spring结合在一起使用，可以手动导入`Hibernate-validator`依赖。
+- @Valid（标准JSR-303规范）是javax（即Oracle）提供的校验注解,所属包为：`javax.validation.Valid`，`Hibernate-validator`对其进行了实现，并增加了一些自定义的校验注解。同时，它并非一定要和Spring结合在一起使用，可以手动导入`Hibernate-validator`依赖，如果是Spring boot用，可以导入`spring-boot-starter-validation`，这个包会依赖引入`Hibernate-validator`。
 - @Validated（Spring's JSR-303规范，是标准JSR-303的一个变种）是Spring Validation验证框架对参数的验证机制提供的注解。  
 - 配合BindingResult都可以直接提供参数验证结果。  
 - 可以认为@Validated是@Valid的二次封装，二者在基本验证功能上没有太多区别。但是在分组、注解地方、嵌套验证等功能上两个有所不同。  

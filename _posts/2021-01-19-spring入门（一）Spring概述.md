@@ -367,7 +367,7 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
    //...
 }
 ```
-2. 自己无参构造函数this()初始化bean读取器和扫描器
+2. 自己无参构造函数this()初始化bean读取器和扫描器  
 ```java
 public AnnotationConfigApplicationContext() {
    //在IOC容器中初始化一个 注解bean读取器AnnotatedBeanDefinitionReader,对带有注解的BeanDefinition进行注册
@@ -376,7 +376,7 @@ public AnnotationConfigApplicationContext() {
    this.scanner = new ClassPathBeanDefinitionScanner(this);
 }
 ```
-3. 对带有注解的BeanDefinition进行注册，例如上面的HelloWorldConfiguration
+3. 对带有注解的BeanDefinition进行注册，例如上面的HelloWorldConfiguration  
 ```java
 //按指定bean配置类读取bean
 public void register(Class<?>... annotatedClasses) {
@@ -442,14 +442,14 @@ public void registerBean(Class<?> annotatedClass) {
    BeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder, this.registry);
 }
 ```
-register方法重点完成了bean配置类本身的解析和注册，处理过程可以分为以下几个步骤：
+register方法重点完成了bean配置类本身的解析和注册，处理过程可以分为以下几个步骤：  
 - 根据bean配置类，使用BeanDefinition解析Bean的定义信息，主要是一些注解信息
 - Bean作用域的处理，默认缺少@Scope注解，解析成单例
 - 借助AnnotationConfigUtils工具类解析通用注解
-- 将bean定义信息以beanname，beandifine键值对的形式注册到ioc容器中
+- 将bean定义信息以beanname，beandifine键值对的形式注册到ioc容器中  
 4. refresh()刷新上下文
 　　refresh方法在AbstractApplicationContext容器中实现，refresh()方法的作用加载或者刷新当前的配置信息，如果已经存在spring容器，则先销毁之前的容器，重新创建spring容器，载入bean定义，完成容器初始化工作，debug进源码可以看出AnnotationConfigApplicationContext容器是通过调用其父类AbstractApplicationContext的refresh()函数启动整个IoC容器完成对Bean定义的载入。  
-AbstractApplicationContext.java中refresh方法的实现代码如下：
+AbstractApplicationContext.java中refresh方法的实现代码如下：  
 ```java
 public void refresh() throws BeansException, IllegalStateException {
    synchronized (this.startupShutdownMonitor) {
@@ -486,7 +486,7 @@ public void refresh() throws BeansException, IllegalStateException {
          // 10. 注册时间监听器，将所有项目里面的ApplicationListener注册到容器中来
          registerListeners();
 
-         // 11. 初始化所有剩下的单实例bean,单例bean在初始化容器时创建，原型bean在获取时（getbean）时创建
+         // 11. 初始化所有剩下的单实例bean,单例bean在初始化容器时创建。原型bean在获取时（getbean）时创建，懒加载bean在获取时创建
          finishBeanFactoryInitialization(beanFactory);
 
          // 12. 完成BeanFactory的初始化创建工作，IOC容器就创建完成；
@@ -517,3 +517,4 @@ public void refresh() throws BeansException, IllegalStateException {
    }
 }
 ```
+　　上面的bean实例化是根据注册的BeanDefinition，来进行bean实例化的。对于Bean的实例化，可以直接通过断点debug bean的构造方法来跟踪bean的实例化代码堆栈。

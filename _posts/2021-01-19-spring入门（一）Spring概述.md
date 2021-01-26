@@ -323,6 +323,49 @@ spring/app-context.xml 加载应用程序，配置信息）， 类型为 Applica
    ![HelloWorld Spring注解类图](/images/20210119/helloWorldAnnotated.png)  
    
 　　上面的Spring实现，实际上已经是控制反转的基本原理体现，依赖注入是IoC的一种特殊形式。
+3. 使用注解扫描包的形式初始化  
+```java
+package org.example.spring.annotated;
+
+import org.example.spring.message.MessageRenderer;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class HelloWorldSpringAnnotatedScan {
+    public static void main (String... args) {
+        ApplicationContext ctx = new AnnotationConfigApplicationContext("org.example.spring.annotated");
+        MessageRenderer mr = ctx.getBean("renderer",MessageRenderer.class);
+        mr.render();
+        TestBean testBean = ctx.getBean(TestBean.class);
+        System.out.println(testBean.getMessage());
+    }
+}
+```
+可以看到，这个初始化类，会扫描包`org.example.spring.annotated`下的注解，注册bean，例如`org.example.spring.annotated`包下新增的一个类：  
+```java  
+package org.example.spring.annotated;
+
+import org.example.spring.message.MessageProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class TestBean {
+
+    @Autowired
+    MessageProvider messageProvider;
+
+    private String name;
+
+    TestBean(){
+        this.name= "Test";
+    }
+
+    public String getMessage() {
+        return messageProvider.getMessage()+" "+this.name;
+    }
+}
+```
 ### AnnotationConfigApplicationContext 容器创建过程
 　　Spring在BeanFactory基础上提供了一些列具体容器的实现，其中AnnotationConfigApplicationContext是一个用来管理注解bean的容器，从AnnotationConfigApplicationContext的实现结构图中可以看出：
    ![AnnotationConfigApplicationContext](/images/20210119/AnnotationConfigApplicationContext.png)  

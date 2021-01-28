@@ -7,7 +7,6 @@ categories:
    - Web开发  
 author: linyuliang  
 description: Spring概述
-classes: wide
 toc: true
 ---
 本文是spring 入门教程（一），目标是知道Spring是什么，能做什么，以及一个简单的Spring的例子，内容基本均拷贝自以下参考资料。

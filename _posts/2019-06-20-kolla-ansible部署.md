@@ -10,7 +10,6 @@ categories:
     - Iaas  
 author: linyuliang  
 description: kolla-ansible部署openstack入门教程，使用multinode  
-classes: wide
 toc: true
 ---
 从未使用过openstack，本文是对高可用openstack的第一次安装尝试，没时间整理，安装完再慢慢熟悉，后续整理。  

@@ -10,9 +10,9 @@ main:
   #   url: /collection-archive/
   # - title: "Sitemap"
   #   url: /sitemap/
-  - title: "Posts"
+  - title: "文章"
     url: /year-archive/
-  - title: "Categories"
+  - title: "分类"
     url: /categories/
-  - title: "Tags"
+  - title: "标签"
     url: /tags/

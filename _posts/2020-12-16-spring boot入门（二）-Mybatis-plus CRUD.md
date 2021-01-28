@@ -8,6 +8,7 @@ categories:
 author: linyuliang  
 description: spring boot入门(二) 使用Mybatis Plus 实现简单的单表CRUD Demo  
 toc: true
+toc_sticky: true
 ---
 本文是spring boot的新手入门教程，目标是使用Mybatis Plus 实现简单的Mysql单表增删改查，不考虑事务等。  
 

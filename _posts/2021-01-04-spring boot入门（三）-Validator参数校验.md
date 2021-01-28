@@ -11,6 +11,7 @@ categories:
 author: linyuliang  
 description: spring boot入门(三)-Validator参数校验 统一参数校验
 toc: true
+toc_sticky: true
 ---
 本文是spring boot的新手入门教程(三)，目标是学会使用统一参数校验注解@Valid和@Validated，完成接口和方法参数的校验。  
 

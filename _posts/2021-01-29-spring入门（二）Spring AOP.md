@@ -10,7 +10,6 @@ author: linyuliang
 description: Spring AOP 注解的实现例子
 toc: true
 toc_sticky: true
-classes: wide
 ---
 本文是spring 入门教程（二），目标是学会Spring AOP 注解方式的使用。基本内容拷贝自以下参考资料：
 

@@ -6,6 +6,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
+
     steps:
     - name: Checkout 🛎️
       uses: actions/checkout@master
@@ -25,13 +28,9 @@ jobs:
         npm install
         hexo clean
         hexo generate
-      with:
-        ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
 
     - name: Generate algolia data
       run: hexo algolia
-      with:
-        ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
 
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@3.7.1

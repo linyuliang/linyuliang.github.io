@@ -1,0 +1,495 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>echidna智能合约模糊测试 | 随笔小记</title><meta name="keywords" content="echidna,智能合约"><meta name="author" content="林玉良"><meta name="copyright" content="林玉良"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="echidna简单入门">
+<meta property="og:type" content="article">
+<meta property="og:title" content="echidna智能合约模糊测试">
+<meta property="og:url" content="https://linyuliang.github.io/2022/09/13/echidna%E5%90%88%E7%BA%A6%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:site_name" content="随笔小记">
+<meta property="og:description" content="echidna简单入门">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-09-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-10-10T07:10:59.305Z">
+<meta property="article:author" content="林玉良">
+<meta property="article:tag" content="echidna">
+<meta property="article:tag" content="智能合约">
+<meta name="twitter:card" content="summary"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://linyuliang.github.io/2022/09/13/echidna%E5%90%88%E7%BA%A6%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="kqUnPvcIdzEDiMmgpI7ZtMQrOqQNiXs-pwBMdsenxqM"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?059459603c4a0d56b1075e964f7c73b4";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 林玉良","link":"链接: ","source":"来源: 随笔小记","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'echidna智能合约模糊测试',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-10 15:10:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/sitemap.xml"><i class="fa-fw fa fa-sitemap"></i><span> sitemap</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">随笔小记</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/sitemap.xml"><i class="fa-fw fa fa-sitemap"></i><span> sitemap</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">echidna智能合约模糊测试</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-12T16:00:00.000Z" title="发表于 2022-09-13 00:00:00">2022-09-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-10-10T07:10:59.305Z" title="更新于 2022-10-10 15:10:59">2022-10-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="echidna智能合约模糊测试"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>Echidna是一个快速的智能合约（solidity）模糊测试框架，它是用Haskell语言编写的程序，实现基于以太坊智能合约属性的模糊测试。它使用基于合约ABI的复杂的grammar-based模糊测试来验证用户定义断言或者Solidity断言。<br>Echidna在设计时考虑了模块化，可以很容易地被扩展成包含新的变种或者在特定情况下，测试特定合约。  </p>
+<h1 id="特性："><a href="#特性：" class="headerlink" title="特性："></a>特性：</h1><ul>
+<li>生成根据实际代码生成定制化输入</li>
+<li>可选的语料库集合，变种和覆盖指引，以便发现更深层次的错误</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/crytic/slither">Slither</a> 加持，在模糊测试之前提取有用的信息</li>
+<li>集成源码，以识别哪些代码行在模糊测试后已经被覆盖</li>
+<li>Curses-based retro UI、text-only或JSON输出</li>
+<li>快速分类的自动最小化测试用例</li>
+<li>与开发工作流无缝集成</li>
+<li>模糊测试的最大gas消耗报告</li>
+<li>支持使用 <a target="_blank" rel="noopener" href="https://github.com/crytic/etheno">Etheno</a> 和Truffle来初始化复杂的合约</li>
+</ul>
+<p>此文只是Echidna的简单入门介绍，具体学会使用还是要看官方的<a target="_blank" rel="noopener" href="https://github.com/crytic/building-secure-contracts/tree/master/program-analysis/echidna#echidna-tutorial">Echidna 教程</a> 。  </p>
+<p>参考资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/crytic/echidna">Echidna 官方github </a> （基本翻译自官方github文档）</li>
+<li><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/blockchain-articles/211940.html">Echidna：功能强大的以太坊模糊测试框架</a>  <span id="more"></span></li>
+</ul>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><h2 id="执行测试任务"><a href="#执行测试任务" class="headerlink" title="执行测试任务"></a>执行测试任务</h2><p>Echidna的核心功能通过一个名叫echidna-test的可执行文件实现，echidna-test以一个智能合约和合约中的一组不变量（不变量：以echidna_开头、没有参数并返回布尔值的实体函数，返回的值应该始终保持为true）作为输入。对于每一个不变量，它将生成一套针对智能合约的随机调用序列，并检查不变量是否保持不变。如果它能够找到某种方法来篡改不变量（即,使返回值为false），它就会打印出这样做（使结果为false）的的调用序列。如果不能找到，则判断为该智能合约是安全的。</p>
+<h2 id="编写不变量"><a href="#编写不变量" class="headerlink" title="编写不变量"></a>编写不变量</h2><p>不变量是以echidna_开头的solidity函数，该函数没有参数，并且返回布尔值。例如，如果你有一个<code>balance</code>变量，该变量应当一直不小于<code>20</code>，则你可以在你的合约中添加一个额外的函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function echidna_check_balance() public returns (bool) &#123;</span><br><span class="line">  return(balance &gt;= 20);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>进行不变量的测试，可以执行如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">echidna-test myContract.sol</span></span><br></pre></td></tr></table></figure>
+<p>在<a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/blob/master/tests/solidity/basic/flags.sol">tests&#x2F;solidity&#x2F;basic&#x2F;flags.sol.</a> 是一个例子合约。你可以执行如下命令进行测试：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">echidna-test tests/solidity/basic/flags.sol</span></span><br></pre></td></tr></table></figure>
+<p>在上面这个例子中，Echidna 可以找到一个调用序列，让<code>echidna_sometimesfalse</code>的结果为false，并且不可能找到一个伪造输入，让<code>echidna_alwaystrue</code>的结果返回false。</p>
+<h2 id="支持合约的编译系统"><a href="#支持合约的编译系统" class="headerlink" title="支持合约的编译系统"></a>支持合约的编译系统</h2><p>Echidna可以使用<a target="_blank" rel="noopener" href="https://github.com/crytic/crytic-compile">crytic-compile</a> 来测试由不同的合约编译系统编译的智能合约，包括<a target="_blank" rel="noopener" href="https://truffleframework.com/">Truffle</a> 或者<a target="_blank" rel="noopener" href="https://hardhat.org/">hardhat</a> 。使用<code>echidna-test .</code>可以在当前的编译框架环境下调用echidna。</p>
+<p>最重要的是，Echidna 支持两种测试复杂合约的模式。  </p>
+<ol>
+<li>可以用<a target="_blank" rel="noopener" href="https://github.com/crytic/building-secure-contracts/blob/master/program-analysis/echidna/end-to-end-testing.md">Truffle和Etheno描述合约的初始化过程</a> ，并将其用作Echidna的基本状态</li>
+<li>echidna看可以通过在CLI命令中传入对应的Solidity源，来调用已知ABI的任意合约。（在你的配置中使用<code>multi-abi: true</code>来打开这个特性）</li>
+</ol>
+<h2 id="Echidna速成"><a href="#Echidna速成" class="headerlink" title="Echidna速成"></a>Echidna速成</h2><p>在官方的<a target="_blank" rel="noopener" href="https://github.com/crytic/building-secure-contracts/tree/master/program-analysis/echidna#echidna-tutorial">Building Secure Smart Contracts</a> 仓库，包含了Echidna的速成课程，包含例子，课程文档和练习题。</p>
+<h2 id="在Github-Actions工作流中集成Echidna"><a href="#在Github-Actions工作流中集成Echidna" class="headerlink" title="在Github Actions工作流中集成Echidna"></a>在Github Actions工作流中集成Echidna</h2><p>Echidna Action可以作为Github Actions工作流的一部分，来执行<code>echidna-test</code>。有关的使用说明和示例，可以参考<a target="_blank" rel="noopener" href="https://github.com/crytic/echidna-action">crytic&#x2F;echidna-action</a> 代码库。</p>
+<h2 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h2><p>Echidna 的 CLI命令可以用来选择测试合约，并且加载配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">echidna-test contract.sol --contract TEST --config config.yaml</span></span><br></pre></td></tr></table></figure>
+<p>配置文件允许用户选择 EVM 和测试生成参数。可以在<a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/blob/master/tests/solidity/basic/default.yaml">tests&#x2F;solidity&#x2F;basic&#x2F;default.yaml</a> 中找到具有完整默认选项且带有注释的配置文件示例。有关配置选项的更详细文档可以查看官方的<a target="_blank" rel="noopener" href="https://github.com/trailofbits/echidna/wiki/Config">wiki</a> 。   </p>
+<p>Echidna 支持三种不同的输出模式。有默认的文本模式、json模式和none模式（禁止所有<code>stdout</code>输出）。 JSON 模式按如下方式报告整个活动。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Campaign</span> = &#123;</span><br><span class="line">  <span class="string">&quot;success&quot;</span>      : bool,</span><br><span class="line">  <span class="string">&quot;error&quot;</span>        : string?,</span><br><span class="line">  <span class="string">&quot;tests&quot;</span>        : [<span class="title class_">Test</span>],</span><br><span class="line">  <span class="string">&quot;seed&quot;</span>         : number,</span><br><span class="line">  <span class="string">&quot;coverage&quot;</span>     : <span class="title class_">Coverage</span>,</span><br><span class="line">  <span class="string">&quot;gas_info&quot;</span>     : [<span class="title class_">GasInfo</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Test</span> = &#123;</span><br><span class="line">  <span class="string">&quot;contract&quot;</span>     : string,</span><br><span class="line">  <span class="string">&quot;name&quot;</span>         : string,</span><br><span class="line">  <span class="string">&quot;status&quot;</span>       : string,</span><br><span class="line">  <span class="string">&quot;error&quot;</span>        : string?,</span><br><span class="line">  <span class="string">&quot;testType&quot;</span>     : string,</span><br><span class="line">  <span class="string">&quot;transactions&quot;</span> : [<span class="title class_">Transaction</span>]?</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Transaction</span> = &#123;</span><br><span class="line">  <span class="string">&quot;contract&quot;</span>     : string,</span><br><span class="line">  <span class="string">&quot;function&quot;</span>     : string,</span><br><span class="line">  <span class="string">&quot;arguments&quot;</span>    : [string]?,</span><br><span class="line">  <span class="string">&quot;gas&quot;</span>          : number,</span><br><span class="line">  <span class="string">&quot;gasprice&quot;</span>     : number</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>Coverage</code>是一个描述某些覆盖率增加的调用的字典。每个<code>GasInfo</code>条目都是一个元组，它描述了如何达到最大的gas使用量，而且也不太重要。这些接口可能会在以后的某个日期进行更改，以便稍微更友好一些。<code>testType</code>可以是<code>property</code>或<code>assertion</code>，而<code>status</code>的值是<code>fuzzing</code>、<code>shrinking</code>、<code>solved</code>、<code>passed</code>或<code>error</code>。</p>
+<h2 id="Echidna调试性能问题"><a href="#Echidna调试性能问题" class="headerlink" title="Echidna调试性能问题"></a>Echidna调试性能问题</h2><p>处理Echidna性能问题的最佳方法是运行<code>echidna-test</code>时，开启分析。这样的话，会生成一个文本文件<code>echidna-test.prof</code>,该文件显示了哪些函数占用了最多的CPU和内存。<br>要构建一个支持分析的<code>echidna-test</code>版本，可以使用Stack或者Nix。  </p>
+<ol>
+<li>使用Stack，添加标记<code>--profile</code>将使构建的版本支持分析；</li>
+<li>使用Nix，运行<code>nix-build --arg profiling true</code>将使构建的版本支持分析。</li>
+</ol>
+<p>在运行时，要打开分析，需要在执行<code>echidna-test</code>命令时，需要增加<code>+RTS -p</code>标记。</p>
+<p>过去的性能问题是因为函数在可以被缓存时被重复调用，并且内存泄漏与 Haskell 的惰性求值有关；检查这些将是一个很好的起点。  </p>
+<h2 id="限制和已知问题"><a href="#限制和已知问题" class="headerlink" title="限制和已知问题"></a>限制和已知问题</h2><p>EVM 仿真和测试很难。 Echidna 在最新版本中有许多限制。 其中一些是限制从<a target="_blank" rel="noopener" href="https://github.com/dapphub/dapptools/tree/master/src/hevm">hevm</a> 继承的，一些是处于设计&#x2F;性能的考量，或者是代码中的bug。在这里将它们列出来，包含对应的issue和状态（”wont fix”, “on hold”, “in review”, “fixed”）。“fixed”状态的Issues将会被纳入到下一个Echidna发布的版本中。  </p>
+<table>
+<thead>
+<tr>
+<th>描述</th>
+<th>问题链接</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Vyper支持存在一些限制</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/issues/652">#652</a></td>
+<td>wont fix</td>
+</tr>
+<tr>
+<td>对Library的测试支持存在限制</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/issues/651">#651</a></td>
+<td>wont fix</td>
+</tr>
+<tr>
+<td>缺乏对Solidity中对函数指针的支持</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/issues/798">#798</a></td>
+<td>on hold</td>
+</tr>
+</tbody></table>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="预编译的二进制文件"><a href="#预编译的二进制文件" class="headerlink" title="预编译的二进制文件"></a>预编译的二进制文件</h2><p>在开始前，请确保安装了<a target="_blank" rel="noopener" href="https://github.com/crytic/slither">Slither</a> (<code>pip3 install slither-analyzer --user</code>)。如果你想在Linux或者MacOS中快速测试Echidna，可以在<a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/releases">官方的release页面</a> 上找到基于Ubuntu构建的linux二进制包的静态链接库和基于MacOS的二进制包。  </p>
+<h2 id="Docker容器"><a href="#Docker容器" class="headerlink" title="Docker容器"></a>Docker容器</h2><p>如果选择了使用预编译好的docker容器，可以在<a target="_blank" rel="noopener" href="https://github.com/orgs/crytic/packages?repo_name=echidna">docker包页面</a> 获得，这些包都是通过Github Actions自动编译的。<code>echidna</code>容器是基于<code>ubuntu:focal</code>镜像，该镜像是一个刚好可以使用Echidna的小而灵活的镜像。该容器提供了<code>echidna-test</code>的预构建版本，以及<code>slither</code>、<code>crytic-compile</code>、<code>solc-select</code> 和 <code>nvm</code>，总大小在200 MB以下。  </p>
+<p>请注意，这些容器镜像当前仅构建在 x86 系统上。由于 CPU 仿真会导致性能损失，因此不建议在 ARM 设备（例如 Mac M1 系统）上运行它们。  </p>
+<p>Docker容器镜像的不同Tag含义：</p>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>vx.y.z</code></td>
+<td>对应版本 <code>vx.y.z</code> 的构建</td>
+</tr>
+<tr>
+<td><code>latest</code></td>
+<td>最新的Echidna release版本</td>
+</tr>
+<tr>
+<td><code>edge</code></td>
+<td>默认分支上的最新提交版本</td>
+</tr>
+<tr>
+<td><code>testing-foo</code></td>
+<td>基于 <code>foo</code> 分支测试构建</td>
+</tr>
+</tbody></table>
+<p>要以交互方式运行最新 Echidna 版本的容器，可以使用类似于以下命令。该命令将当前目录映射到容器内的 <code>/src</code>，并为您提供一个shell，您可以在其中使用<code>echidna-test</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run --<span class="built_in">rm</span> -it -v `<span class="built_in">pwd</span>`:/src ghcr.io/crytic/echidna/echidna</span></span><br></pre></td></tr></table></figure>
+<p>如果是windows环境，<code>pwd</code>要使用全路径，例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run --<span class="built_in">rm</span> -it -v <span class="string">&quot;E:\projects\hardhat-template&quot;</span>:/src ghcr.io/crytic/echidna/echidna</span></span><br></pre></td></tr></table></figure>
+<p>如果固定solidity版本测试，可以在启动时，就将对应solidity版本安装好（安装solidity可能需要搭梯子）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run --<span class="built_in">rm</span> -it -v <span class="string">&quot;E:\projects\hardhat-template&quot;</span>:/src ghcr.io/crytic/echidna/echidna</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">solc-select install 0.8.9 &amp;&amp; solc-select use 0.8.9</span></span><br></pre></td></tr></table></figure>
+<p>然后就可以使用<code>echidna-test</code>，对映射到容器<code>/src</code>目录下的合约进行测试：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">echidna-test ./src/contracts/Greeter.sol</span></span><br></pre></td></tr></table></figure>
+<p>或者，如果想在本地构建最新版本的Echidna，建议使用 Docker。在该克隆下来的代码库中，运行以下命令来构建 Docker 容器映像：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker build -t echidna -f docker/Dockerfile --target final-ubuntu .</span></span><br></pre></td></tr></table></figure>
+<p>然后，你可以再本地运行<code>echidna </code>镜像。例如，安装solc 0.5.7 并且测试<code>tests/solidity/basic/flags.sol</code>,可以执行如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run -it -v `<span class="built_in">pwd</span>`:/src echidna bash -c <span class="string">&quot;solc-select install 0.5.7 &amp;&amp; solc-select use 0.5.7 &amp;&amp; echidna-test /src/tests/solidity/basic/flags.sol&quot;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="使用Stack构建"><a href="#使用Stack构建" class="headerlink" title="使用Stack构建"></a>使用Stack构建</h2><p>如果您希望从源代码构建，请使用 <a target="_blank" rel="noopener" href="https://docs.haskellstack.org/en/stable/README/">Stack</a> 。应该在 <code>~/.local/bin</code> 目录下使用<code>stack install</code> 构建和编译<code>echidna-test</code>。 您需要链接 libreadline 和 libsecp256k1（在recovery enabled的情况下构建），它们应该用您选择的包管理器安装。还需要安装最新版本的<a target="_blank" rel="noopener" href="https://github.com/scipr-lab/libff">libff</a> ，可以参考官方的<a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/blob/master/.github/scripts/install-libff.sh">CI测试脚本</a> 。<br>一些 Linux 发行版没有为 Haskell 需要的某些东西提供静态库，例如。 Arch Linux，这将导致<code>stack build</code>执行失败并出现链接错误，因为我们使用了<code>-static</code>参数。在这种情况下，可以使用<code>--flag echidna:-static</code>参数来生成一个动态链接库。<br>如果您遇到与链接相关的构建错误，请尝试修改<code>--extra-include-dirs</code>和<code>--extra-lib-dirs</code>。</p>
+<h2 id="使用Nix构建（在Apple-M1系统上工作）"><a href="#使用Nix构建（在Apple-M1系统上工作）" class="headerlink" title="使用Nix构建（在Apple M1系统上工作）"></a>使用Nix构建（在Apple M1系统上工作）</h2><p><a target="_blank" rel="noopener" href="https://nixos.org/download.html">Nix users</a> 可以使用如下的命令安装最新的 Echidna：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nix-env -i -f https://github.com/crytic/echidna/tarball/master</span></span><br></pre></td></tr></table></figure>
+<p>要为非 Nix的macOS 系统构建独立版本，使用一下命令将Echidna 和所有链接的 dylib 打包到一个 tarball 中：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nix-build macos-release.nix</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">ll result/</span></span><br><span class="line">bin    echidna-1.7.3-aarch64-darwin.tar.gz</span><br></pre></td></tr></table></figure>
+<p>可以在<code>nix-shell</code>中使用 Cabal 开发 Echidna。Nix 将自动安装开发所需的所有依赖项，包括<code>crytic-compile</code>和<code>solc</code>。以下命令是一个让<code>GHCi</code>与<code>Echidna</code>一起工作的快速方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/crytic/echidna</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> echidna</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">nix-shell</span></span><br><span class="line"><span class="meta prompt_">[nix-shell]$ </span><span class="language-bash">cabal new-repl</span></span><br></pre></td></tr></table></figure>
+<p>执行测试套件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nix-shell --run &#x27;cabal test&#x27;</span><br></pre></td></tr></table></figure>
+<h1 id="已公开的使用"><a href="#已公开的使用" class="headerlink" title="已公开的使用"></a>已公开的使用</h1><h2 id="属性测试使用方"><a href="#属性测试使用方" class="headerlink" title="属性测试使用方"></a>属性测试使用方</h2><p>这是使用 Echidna 进行测试的智能合约项目的部分列表：  </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/search?q=org:Uniswap+echidna&type=commits">Uniswap-v3</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/balancer-labs/balancer-core/tree/master/echidna">Balancer</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/makerdao/dss-vest/pull/16">MakerDAO vest</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/BellwoodStudios/optimism-dai-bridge/blob/master/contracts/test/DaiEchidnaTest.sol">Optimism DAI Bridge</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/WETH10/WETH10/tree/main/contracts/fuzzing">WETH10</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/yieldprotocol/fyDai/pull/312">Yield</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/opynfinance/ConvexityProtocol/tree/dev/contracts/echidna">Convexity Protocol</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/aragon/staking/blob/82bf54a3e11ec4e50d470d66048a2dd3154f940b/packages/protocol/contracts/test/lib/EchidnaStaking.sol">Aragon Staking</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/centrehq/centre-tokens/tree/master/echidna_tests">Centre Token</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/tokencard/contracts/tree/master/tools/echidna">Tokencard</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/usmfum/USM/pull/41">Minimalist USD Stablecoin</a></li>
+</ul>
+<h2 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h2><p>以下安全漏洞都是使用Echidna发现的。如果您使用我们的工具发现了安全漏洞，请提交包含相关信息的 PR。  </p>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Vulnerability</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/0x-protocol.pdf">0x Protocol</a></td>
+<td>If an order cannot be filled, then it cannot be canceled</td>
+<td>Oct 2019</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/0x-protocol.pdf">0x Protocol</a></td>
+<td>If an order can be partially filled with zero, then it can be partially filled with one token</td>
+<td>Oct 2019</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/0x-protocol.pdf">0x Protocol</a></td>
+<td>The cobbdouglas function does not revert when valid input parameters are used</td>
+<td>Oct 2019</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/BalancerCore.pdf">Balancer Core</a></td>
+<td>An attacker cannot steal assets from a public pool</td>
+<td>Jan 2020</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/BalancerCore.pdf">Balancer Core</a></td>
+<td>An attacker cannot generate free pool tokens with joinPool</td>
+<td>Jan 2020</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/BalancerCore.pdf">Balancer Core</a></td>
+<td>Calling joinPool-exitPool does not lead to free pool tokens</td>
+<td>Jan 2020</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/BalancerCore.pdf">Balancer Core</a></td>
+<td>Calling exitswapExternAmountOut does not lead to free assets</td>
+<td>Jan 2020</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/Liquity.pdf">Liquity Dollar</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/liquity/dev/blob/echidna_ToB_final/packages/contracts/contracts/TestContracts/E2E.sol#L242-L298">Closing troves require to hold the full amount of LUSD minted</a></td>
+<td>Dec 2020</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/Liquity.pdf">Liquity Dollar</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/liquity/dev/blob/echidna_ToB_final/packages/contracts/contracts/TestContracts/E2E.sol#L242-L298">Troves can be improperly removed</a></td>
+<td>Dec 2020</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/Liquity.pdf">Liquity Dollar</a></td>
+<td>Initial redeem can revert unexpectedly</td>
+<td>Dec 2020</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/Liquity.pdf">Liquity Dollar</a></td>
+<td>Redeem without redemptions might still return success</td>
+<td>Dec 2020</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/OriginDollar.pdf">Origin Dollar</a></td>
+<td>Users are allowed to transfer more tokens that they have</td>
+<td>Nov 2020</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/OriginDollar.pdf">Origin Dollar</a></td>
+<td>User balances can be larger than total supply</td>
+<td>Nov 2020</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/trailofbits/publications/blob/master/reviews/YieldProtocol.pdf">Yield Protocol</a></td>
+<td>Arithmetic computation for buying and selling tokens is imprecise</td>
+<td>Aug 2020</td>
+</tr>
+</tbody></table>
+<h2 id="研究"><a href="#研究" class="headerlink" title="研究"></a>研究</h2><p>还可以使用 Echidna 从智能合约模糊测试论文中复制研究示例，以演示它可以多快找到解决方案。所有这些都可以在笔记本电脑上完成，用时从几秒钟到一两分钟不等。  </p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://forum.openzeppelin.com/t/using-automatic-analysis-tools-with-makerdao-contracts/1021">Using automatic analysis tools with MakerDAO contracts</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/blob/master/tests/solidity/research/vera_dschief.sol">SimpleDSChief</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/b-mueller/sabre#example-2-integer-precision-bug">Integer precision bug in Sigma Prime</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/blob/master/tests/solidity/research/solcfuzz_funwithnumbers.sol">VerifyFunWithNumbers</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://files.sri.inf.ethz.ch/website/papers/ccs19-ilf.pdf">Learning to Fuzz from Symbolic Execution with Application to Smart Contracts</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/blob/master/tests/solidity/research/ilf_crowdsale.sol">Crowdsale</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.06944">Harvey: A Greybox Fuzzer for Smart Contracts</a></td>
+<td><a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/blob/master/test/solidity/research/harvey_foo.sol">Foo</a>, <a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/blob/master/tests/solidity/research/harvey_baz.sol">Baz</a></td>
+</tr>
+</tbody></table>
+<h2 id="学术刊物"><a href="#学术刊物" class="headerlink" title="学术刊物"></a>学术刊物</h2><table>
+<thead>
+<tr>
+<th>Paper Title</th>
+<th>Venue</th>
+<th>Publication Date</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://agroce.github.io/issta21.pdf">echidna-parade: Diverse multicore smart contract fuzzing</a></td>
+<td><a target="_blank" rel="noopener" href="https://conf.researchr.org/home/issta-2021">ISSTA 2021</a></td>
+<td>July 2021</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://agroce.github.io/issta20.pdf">Echidna: Effective, usable, and fast fuzzing for smart contracts</a></td>
+<td><a target="_blank" rel="noopener" href="https://conf.researchr.org/home/issta-2020">ISSTA 2020</a></td>
+<td>July 2020</td>
+</tr>
+<tr>
+<td><a href="papers/echidna_fc_poster.pdf">Echidna: A Practical Smart Contract Fuzzer</a></td>
+<td><a target="_blank" rel="noopener" href="https://fc20.ifca.ai/program.html">FC 2020</a></td>
+<td>Feb 2020</td>
+</tr>
+</tbody></table>
+<p>如果您使用 Echidna 用于学术工作，可以考虑申请<a target="_blank" rel="noopener" href="https://blog.trailofbits.com/2019/11/13/announcing-the-crytic-10k-research-prize/">Crytic的1万美元研究奖</a> 。</p>
+<h1 id="寻求帮助"><a href="#寻求帮助" class="headerlink" title="寻求帮助"></a>寻求帮助</h1><p>可以随时访问官方在<a target="_blank" rel="noopener" href="https://empireslacking.herokuapp.com/">Empire Hacking</a> 中的#ethereum slack 频道，以获取使用或扩展 Echidna 的帮助。</p>
+<ul>
+<li>从查看这些简单 <a href="tests/solidity/basic/flags.sol">Echidna 不变量</a> 开始</li>
+<li>考虑直接向 Echidna 开发团队发送<a href="mailto:echidna-dev@trailofbits.com">电子邮件</a></li>
+</ul>
+<h1 id="版权"><a href="#版权" class="headerlink" title="版权"></a>版权</h1><p>Echidna 在 <a target="_blank" rel="noopener" href="https://github.com/crytic/echidna/blob/master/LICENSE">AGPLv3 许可</a> 下获得许可和分发。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://linyuliang.github.io">林玉良</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://linyuliang.github.io/2022/09/13/echidna%E5%90%88%E7%BA%A6%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/">https://linyuliang.github.io/2022/09/13/echidna合约模糊测试/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://linyuliang.github.io" target="_blank">随笔小记</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/echidna/">echidna</a><a class="post-meta__tags" href="/tags/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/">智能合约</a></div><div class="post_share"><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6343bab19fcd535b" async="async"></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/03/24/ClickHouse%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ClickHouse入门（一）</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">林玉良</div><div class="author-info__description">君子以言有物，而行有恒</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/linyuliang"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/linyuliang" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:linyuliang.85@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Welcome to my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%B9%E6%80%A7%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">特性：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%8B%E8%AF%95%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.1.</span> <span class="toc-text">执行测试任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E4%B8%8D%E5%8F%98%E9%87%8F"><span class="toc-number">2.2.</span> <span class="toc-text">编写不变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E5%90%88%E7%BA%A6%E7%9A%84%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.3.</span> <span class="toc-text">支持合约的编译系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Echidna%E9%80%9F%E6%88%90"><span class="toc-number">2.4.</span> <span class="toc-text">Echidna速成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8Github-Actions%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%B8%AD%E9%9B%86%E6%88%90Echidna"><span class="toc-number">2.5.</span> <span class="toc-text">在Github Actions工作流中集成Echidna</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E9%A1%B9"><span class="toc-number">2.6.</span> <span class="toc-text">配置项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Echidna%E8%B0%83%E8%AF%95%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-number">2.7.</span> <span class="toc-text">Echidna调试性能问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E5%92%8C%E5%B7%B2%E7%9F%A5%E9%97%AE%E9%A2%98"><span class="toc-number">2.8.</span> <span class="toc-text">限制和已知问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E7%BC%96%E8%AF%91%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">预编译的二进制文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker%E5%AE%B9%E5%99%A8"><span class="toc-number">3.2.</span> <span class="toc-text">Docker容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Stack%E6%9E%84%E5%BB%BA"><span class="toc-number">3.3.</span> <span class="toc-text">使用Stack构建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Nix%E6%9E%84%E5%BB%BA%EF%BC%88%E5%9C%A8Apple-M1%E7%B3%BB%E7%BB%9F%E4%B8%8A%E5%B7%A5%E4%BD%9C%EF%BC%89"><span class="toc-number">3.4.</span> <span class="toc-text">使用Nix构建（在Apple M1系统上工作）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%B2%E5%85%AC%E5%BC%80%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">已公开的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E6%B5%8B%E8%AF%95%E4%BD%BF%E7%94%A8%E6%96%B9"><span class="toc-number">4.1.</span> <span class="toc-text">属性测试使用方</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%90%E6%9E%9C"><span class="toc-number">4.2.</span> <span class="toc-text">成果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6"><span class="toc-number">4.3.</span> <span class="toc-text">研究</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E6%9C%AF%E5%88%8A%E7%89%A9"><span class="toc-number">4.4.</span> <span class="toc-text">学术刊物</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%BB%E6%B1%82%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.</span> <span class="toc-text">寻求帮助</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%88%E6%9D%83"><span class="toc-number">6.</span> <span class="toc-text">版权</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/13/echidna%E5%90%88%E7%BA%A6%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/" title="echidna智能合约模糊测试"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="echidna智能合约模糊测试"/></a><div class="content"><a class="title" href="/2022/09/13/echidna%E5%90%88%E7%BA%A6%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/" title="echidna智能合约模糊测试">echidna智能合约模糊测试</a><time datetime="2022-09-12T16:00:00.000Z" title="发表于 2022-09-13 00:00:00">2022-09-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/24/ClickHouse%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/" title="ClickHouse入门（一）"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ClickHouse入门（一）"/></a><div class="content"><a class="title" href="/2021/03/24/ClickHouse%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/" title="ClickHouse入门（一）">ClickHouse入门（一）</a><time datetime="2021-03-23T16:00:00.000Z" title="发表于 2021-03-24 00:00:00">2021-03-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/01/29/spring%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%8C%EF%BC%89Spring%20AOP/" title="Spring 入门(二) Spring AOP"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring 入门(二) Spring AOP"/></a><div class="content"><a class="title" href="/2021/01/29/spring%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%8C%EF%BC%89Spring%20AOP/" title="Spring 入门(二) Spring AOP">Spring 入门(二) Spring AOP</a><time datetime="2021-01-28T16:00:00.000Z" title="发表于 2021-01-29 00:00:00">2021-01-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/01/19/spring%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89Spring%E6%A6%82%E8%BF%B0/" title="Spring 入门(一) Spring概述"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring 入门(一) Spring概述"/></a><div class="content"><a class="title" href="/2021/01/19/spring%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89Spring%E6%A6%82%E8%BF%B0/" title="Spring 入门(一) Spring概述">Spring 入门(一) Spring概述</a><time datetime="2021-01-18T16:00:00.000Z" title="发表于 2021-01-19 00:00:00">2021-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/01/04/spring%20boot%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%89%EF%BC%89-Validator%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C/" title="spring boot入门(三)-Validator参数校验"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="spring boot入门(三)-Validator参数校验"/></a><div class="content"><a class="title" href="/2021/01/04/spring%20boot%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%89%EF%BC%89-Validator%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C/" title="spring boot入门(三)-Validator参数校验">spring boot入门(三)-Validator参数校验</a><time datetime="2021-01-03T16:00:00.000Z" title="发表于 2021-01-04 00:00:00">2021-01-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2017 - 2022 By 林玉良</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadWaline () {
+  function insertCSS () {
+    const link = document.createElement("link")
+    link.rel = "stylesheet"
+    link.href = "https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css"
+    document.head.appendChild(link)
+  }
+
+  function initWaline () {
+    const waline = Waline.init(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'waline-blog-server-j9cvjt340-linyuliang.vercel.app',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: false,
+    }, null))
+  }
+
+  if (typeof Waline === 'function') initWaline()
+  else {
+    insertCSS()
+    getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js').then(initWaline)
+  }
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'vQGZ3xRW4bzhrKQMF';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (true) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

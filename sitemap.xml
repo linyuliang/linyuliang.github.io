@@ -151,20 +151,6 @@
   </url>
   
   <url>
-    <loc>https://linyuliang.github.io/tags/echidna/</loc>
-    <lastmod>2022-10-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://linyuliang.github.io/tags/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/</loc>
-    <lastmod>2022-10-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://linyuliang.github.io/tags/github-pages/</loc>
     <lastmod>2022-10-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -200,6 +186,27 @@
   </url>
   
   <url>
+    <loc>https://linyuliang.github.io/tags/echidna/</loc>
+    <lastmod>2022-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://linyuliang.github.io/tags/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/</loc>
+    <lastmod>2022-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://linyuliang.github.io/tags/spring-boot/</loc>
+    <lastmod>2022-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://linyuliang.github.io/tags/kolla-ansible/</loc>
     <lastmod>2022-10-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -222,13 +229,6 @@
   
   <url>
     <loc>https://linyuliang.github.io/tags/rocky/</loc>
-    <lastmod>2022-10-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://linyuliang.github.io/tags/spring-boot/</loc>
     <lastmod>2022-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -263,6 +263,13 @@
   </url>
   
   <url>
+    <loc>https://linyuliang.github.io/tags/AOP/</loc>
+    <lastmod>2022-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://linyuliang.github.io/tags/tomcat8/</loc>
     <lastmod>2022-10-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -276,24 +283,10 @@
     <priority>0.2</priority>
   </url>
   
-  <url>
-    <loc>https://linyuliang.github.io/tags/AOP/</loc>
-    <lastmod>2022-10-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
 
   
   <url>
     <loc>https://linyuliang.github.io/categories/OLAP/</loc>
-    <lastmod>2022-10-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://linyuliang.github.io/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/</loc>
     <lastmod>2022-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -314,7 +307,7 @@
   </url>
   
   <url>
-    <loc>https://linyuliang.github.io/categories/Iaas/</loc>
+    <loc>https://linyuliang.github.io/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/</loc>
     <lastmod>2022-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -322,6 +315,13 @@
   
   <url>
     <loc>https://linyuliang.github.io/categories/Web%E5%BC%80%E5%8F%91/</loc>
+    <lastmod>2022-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://linyuliang.github.io/categories/Iaas/</loc>
     <lastmod>2022-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

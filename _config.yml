@@ -107,6 +107,7 @@ deploy:
   branch: gh-pages
 
 algolia:
+  appId: '92DDBZW48Y'
   applicationID: '92DDBZW48Y'
   apiKey: 'c725190b90101be46f153a129d4149f2'
   chunkSize: 5000

@@ -392,14 +392,14 @@ chat_hide_show: true
 # chatra
 # https://chatra.io/
 chatra:
-  enable: true
+  enable: false
   id: vQGZ3xRW4bzhrKQMF
 
 # tidio
 # https://www.tidio.com/
 tidio:
-  enable: false
-  public_key:
+  enable: true
+  public_key: kkgcfls2fy4tfidzsdkt1zz5tlys2nfp
 
 # daovoice
 # http://daovoice.io/

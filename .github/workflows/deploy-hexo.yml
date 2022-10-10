@@ -25,12 +25,12 @@ jobs:
         npm install
         hexo clean
         hexo generate
-      env:
+      with:
         ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
 
     - name: Generate algolia data
       run: hexo algolia
-      env:
+      with:
         ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
 
     - name: Deploy 🚀

@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 随笔小记
+title: 林玉良的随笔小记
 subtitle: '林玉良的个人博客站'
 description: '君子以言有物，而行有恒'
 keywords: 林玉良
@@ -106,3 +106,13 @@ deploy:
   repo: https://github.com/linyuliang/linyuliang.github.io
   branch: gh-pages
 
+algolia:
+  applicationID: '92DDBZW48Y'
+  apiKey: 'c725190b90101be46f153a129d4149f2'
+  chunkSize: 5000
+  indexName: 'linyuliang_hexo_blog'
+  fields:
+    - content:strip
+    - path
+    - tags
+    - title

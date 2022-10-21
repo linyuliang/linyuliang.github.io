@@ -3,12 +3,11 @@ title: 使用github pages和jekyll搭建博客
 date: 2017-11-08
 excerpt_separator: "<!--more-->"
 tags:
-  - github pages
   - jekyll
-  - blog
 categories: 
-  - jekyll
+  - blog
 author: linyuliang
+keywords: [jekyll,github,pages,blog,博客,搭建,教程]
 description: 使用github pages和jekyll搭建博客的教程。
 toc: true
 toc_sticky: true

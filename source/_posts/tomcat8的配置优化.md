@@ -3,12 +3,11 @@ title: tomcat8的配置优化
 date: 2017-12-08
 excerpt_separator: "<!--more-->"
 tags:
-  - tomcat8
-  - 配置
-  - 优化
+  - tomcat
 categories: 
   - web容器
 author: linyuliang
+keywords: [tomcat,配置，优化]  
 description: tomat8容器的配置优化。
 toc: true
 toc_sticky: true

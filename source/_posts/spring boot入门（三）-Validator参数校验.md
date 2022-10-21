@@ -4,12 +4,10 @@ date: 2021-01-04
 excerpt_separator: "<!--more-->"
 tags:  
   - spring boot
-  - Validator
-  - Valid
-  - Validated
 categories: 
   - Web开发  
 author: linyuliang  
+keywords: [spring boot,入门,Validator]
 description: spring boot入门(三)-Validator参数校验 统一参数校验
 toc: true
 toc_sticky: true

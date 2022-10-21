@@ -117,3 +117,8 @@ algolia:
     - path
     - tags
     - title
+
+nofollow:
+    enable: true
+    exclude:
+    - https://hexo.io/

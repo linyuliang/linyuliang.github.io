@@ -4,12 +4,10 @@ date: 2022-09-13
 excerpt_separator: "<!--more-->"  
 tags:  
    - echidna
-   - 智能合约  
-
 categories: 
    - 区块链  
-
 author: linyuliang  
+keywords: [echidna,solidity,模糊测试]
 description: echidna简单入门  
 toc: true  
 toc_sticky: true  

@@ -4,12 +4,11 @@ date: 2019-06-20
 excerpt_separator: "<!--more-->"
 tags:  
     - kolla-ansible  
-    - openstack  
-    - 部署
-    - rocky    
+    - openstack    
 categories: 
     - Iaas  
 author: linyuliang  
+keywords: [kolla-ansible,openstack,部署,rocky]
 description: kolla-ansible部署openstack入门教程，使用multinode  
 toc: true
 toc_sticky: true

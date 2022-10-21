@@ -7,6 +7,7 @@ tags:
 categories: 
     - Web开发  
 author: linyuliang  
+keywords: [spring boot,入门,Mybatis Plus]
 description: spring boot入门(二) 使用Mybatis Plus 实现简单的单表CRUD Demo  
 toc: true
 toc_sticky: true

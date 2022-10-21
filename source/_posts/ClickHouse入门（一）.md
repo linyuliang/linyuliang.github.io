@@ -4,10 +4,10 @@ date: 2021-03-24
 excerpt_separator: "<!--more-->"
 tags:  
    - clickhouse
-   - OLAP   
 categories: 
    - OLAP  
 author: linyuliang  
+keywords: [clickhouse,教程]
 description: ClickHouse入门教程一
 toc: true
 toc_sticky: true

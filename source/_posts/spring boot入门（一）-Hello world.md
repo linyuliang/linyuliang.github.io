@@ -7,6 +7,7 @@ tags:
 categories: 
    - Web开发  
 author: linyuliang  
+keywords: [spring boot,入门]
 description: spring boot快速入门，实现Hello World，简单RESTFUL API
 toc: true
 toc_sticky: true

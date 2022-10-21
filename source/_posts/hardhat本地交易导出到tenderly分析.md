@@ -3,10 +3,12 @@ title: hardhat本地交易导出到tenderly分析
 date: 2022-10-20
 excerpt_separator: "<!--more-->"
 tags:  
-   - hardhat solidity debug 调试 tenderly local
+   - tenderly
+   - hardhat
 categories: 
    - 区块链  
 author: linyuliang  
+keywords: [hardhat,solidity,本地,debug,调试,tenderly,local]
 description: 使用tenderly来debug hardhat本地的事务
 toc: true
 toc_sticky: true

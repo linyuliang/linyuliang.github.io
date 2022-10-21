@@ -4,9 +4,10 @@ date: 2017-11-03
 excerpt_separator: "<!--more-->"
 tags:
   - java
-  - 优化
+  - 性能优化
 categories: 
   - Java
+keywords: [java,性能优化]
 description: 实际代码梳理过程中遇到的一些代码优化案例记录。
 toc: true
 toc_sticky: true

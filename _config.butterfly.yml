@@ -11,7 +11,7 @@ menu:
   #   音乐: /music/ || fas fa-music
   #   电影: /movies/ || fas fa-video
   友链: /link/ || fas fa-link
-  sitemap: /sitemap.xml || fa fa-sitemap
+  # sitemap: /sitemap.xml || fa fa-sitemap
   # 关于: /about/ || fas fa-heart
 
 # Code Blocks (代碼相關)

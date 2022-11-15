@@ -124,16 +124,16 @@ cover:
   position: both
   # When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)
   default_cover:
-    - https://fastly.jsdelivr.net/gh/jerryc127/CDN/img/material-2.png
-    - https://fastly.jsdelivr.net/gh/jerryc127/CDN/img/material-1.png
-    - https://fastly.jsdelivr.net/gh/jerryc127/CDN/img/material-3.png
-    - https://fastly.jsdelivr.net/gh/jerryc127/CDN/img/material-6.png
-    - https://fastly.jsdelivr.net/gh/jerryc127/CDN/img/material-5.png
-    - https://fastly.jsdelivr.net/gh/jerryc127/CDN/img/material-4.png
-    - https://fastly.jsdelivr.net/gh/jerryc127/CDN/img/material-7.png
-    - https://fastly.jsdelivr.net/gh/jerryc127/CDN/img/material-9.png
-    - https://fastly.jsdelivr.net/gh/jerryc127/CDN/img/material-8.png
-    - https://fastly.jsdelivr.net/gh/jerryc127/CDN/img/material-10.png
+    - /img/material-2.png
+    - /img/material-1.png
+    - /img/material-3.png
+    - /img/material-6.png
+    - /img/material-5.png
+    - /img/material-4.png
+    - /img/material-7.png
+    - /img/material-9.png
+    - /img/material-8.png
+    - /img/material-10.png
 
 # Replace Broken Images (替換無法顯示的圖片)
 error_img:
@@ -144,7 +144,7 @@ error_img:
 error_404:
   enable: true
   subtitle: 'Page Not Found'
-  background: https://i.loli.net/2020/05/19/aKOcLiyPl2JQdFD.png
+  background: /img/404.png
 
 post_meta:
   page: # Home Page
@@ -440,7 +440,7 @@ footer:
 
 # Baidu Analytics
 # https://tongji.baidu.com/web/welcome/login
-baidu_analytics: 059459603c4a0d56b1075e964f7c73b4
+baidu_analytics: bc5bcb97bb3bb9c7f0ab77610efce0ef
 
 # Google Analytics
 # https://analytics.google.com/analytics/web/
@@ -480,9 +480,9 @@ google_adsense:
 
 site_verification:
   - name: google-site-verification
-    content: kqUnPvcIdzEDiMmgpI7ZtMQrOqQNiXs-pwBMdsenxqM
-  # - name: baidu-site-verification
-  #   content: xxxxxxx
+    content: 5VK6HRphg2K7vkKPlRif5QbINQjLrPxIXi4BB8svHEY
+  - name: baidu-site-verification
+    content: code-NYMpX0nZgY
 
 # Beautify/Effect (美化/效果)
 # --------------------------------------
